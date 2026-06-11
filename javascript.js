@@ -19,19 +19,36 @@ const products = [
     {id: 17, name: 'Samsung Galaxy S24+', cat: 'Phones', price: 799, emoji: '📱', stars: 5, reviews: 745, badge: 'Sale', desc: 'ბრწყინვალე ეკრანი და გაუმჯობესებული AI.', specs: { 'ბრენდი': 'Samsung' }}
 ];
 
-// საიტის პოლიტიკების მონაცემთა ბაზა (ფუტერისთვის)
+// თარგმანების ბაზა
+const translations = {
+    ka: {
+        buy: "ყიდვა", addToCart: "კალათაში დამატება", total: "ჯამი", subtotal: "პროდუქტების ფასი",
+        emptyCart: "თქვენი კალათა ცარიელია", backToCatalog: "კატალოგში დაბრუნება", searchPlaceholder: "მოძებნე პროდუქტი...",
+        allCats: "ყველა კატეგორია", allBrands: "ყველა ბრენდი", similarProducts: "მსგავსი პროდუქტები",
+        recentlyViewed: "ბოლოს ნანახი პროდუქტები", chatHeader: "ონლაინ მხარდაჭერა - მეგი", chatWelcome: "გამარჯობა! მე ვარ მეგი, თქვენი ასისტენტი. რით შემიძლია დაგეხმაროთ?",
+        chatInputPlaceholder: "ჩაწერეთ შეტყობინება...", chatAiReply: "გმადლობთ კავშირისთვის! ჩვენი სმარტ AI ასისტენტი ან ოპერატორი მეგი მალე გიპასუხებთ დეტალურად."
+    },
+    en: {
+        buy: "Buy Now", addToCart: "Add to Cart", total: "Total", subtotal: "Subtotal",
+        emptyCart: "Your cart is empty", backToCatalog: "Back to Catalog", searchPlaceholder: "Search products...",
+        allCats: "All Categories", allBrands: "All Brands", similarProducts: "Similar Products",
+        recentlyViewed: "Recently Viewed Products", chatHeader: "Live Support - Megi", chatWelcome: "Hello! I am Megi, your live assistant. How can I help you today?",
+        chatInputPlaceholder: "Type a message...", chatAiReply: "Thank you for reaching out! Our smart AI assistant or Megi will reply to you shortly."
+    }
+};
+
 const policyData = {
     terms: {
         title: "წესები და პირობები",
-        text: "<p>**1. ზოგადი პირობები**<br>წინამძღობარე ხელშეკრულება არეგულირებს მომხმარებლის მიერ TechShop-ის პლატფორმის გამოყენების წესებს. ვებ-გვერდზე შეკვეთის განთავსებით თქვენ ეთანხმებით აღნიშნულ პირობებს.</p><p>**2. უფასო მიწოდება**<br>მიწოდება ხორციელდება სრულიად უფასოდ საქართველოს მასშტაბით. თბილისში მიწოდება ხდება 1-2 სამუშაო დღეში, ხოლო რეგიონებში 2-4 სამუშაო დღეში.</p>"
+        text: "<p>**1. ზოგადი პირობები**<br>წინამძღობარე ხელშეკრულება არეგულირებს მომხმარებლის მიერ TechShop-ის პლატფორმის გამოყენების წესებს.</p>"
     },
     warranty: {
         title: "საგარანტიო პირობები",
-        text: "<p>**1. გარანტიის ხანგრძლივობა**<br>ყველა ტექნიკურ მოწყობილობაზე ვრცელდება ოფიციალური **1-დან 3 წლამდე** გარანტია, პროდუქტის სპეციფიკაციიდან გამომდინარე.</p><p>**2. საგარანტიო შემთხვევა**<br>გარანტია ფარავს ქარხნულ დეფექტებს. გარანტია არ მოქმედებს მექანიკური დაზიანების, სითხის მოხვედრის ან არასერტიფიცირებული დამტენების გამოყენების შემთხვევაში.</p>"
+        text: "<p>**1. გარანტიის ხანგრძლივობა**<br>ყველა ტექნიკურ მოწყობილობაზე ვრცელდება ოფიციალური **1-დან 3 წლამდე** გარანტია.</p>"
     },
     return: {
         title: "ნივთის დაბრუნების პოლიტიკა",
-        text: "<p>**1. დაბრუნების ვადები**<br>მომხმარებელს უფლება აქვს დააბრუნოს ან შეცვალოს შეძენილი ნივთი **14 კალენდარული დღის** განმავლობაში, თუ ნივთს არ უფიქსირდება გამოყენების კვალი, შენარჩუნებული აქვს სასაქონლო იერსახე და ქარხნული შეფუთვა გაუხსნელია.</p>"
+        text: "<p>**1. დაბრუნების ვადები**<br>მომხმარებელს უფლება აქვს დააბრუნოს ან შეცვალოს შეძენილი ნივთი **14 კალენდარული დღის** განმავლობაში.</p>"
     }
 };
 
@@ -39,8 +56,9 @@ let cart = JSON.parse(localStorage.getItem('techshop_cart')) || [];
 let selectedCategory = 'all';
 let selectedBrand = 'all';
 let authMode = 'login';
-let paymentMethod = 'card'; // 'card' ან 'installment'
+let paymentMethod = 'card'; 
 let currentUser = JSON.parse(localStorage.getItem('techshop_user')) || null;
+let currentLang = localStorage.getItem('techshop_lang') || 'ka';
 
 function handleRouting() {
     const hash = window.location.hash;
@@ -50,6 +68,7 @@ function handleRouting() {
     if (hash.startsWith('#product/')) {
         const id = parseInt(hash.replace('#product/', ''));
         renderProductDetail(id);
+        trackRecentlyViewed(id);
         document.getElementById('detailView').classList.remove('hidden');
     } else if (hash === '#cart') {
         renderCartPage();
@@ -69,10 +88,12 @@ function handleRouting() {
 
 window.addEventListener('hashchange', handleRouting);
 window.addEventListener('DOMContentLoaded', () => {
+    initLangSelector();
     initFilters();
     initBrandFilters();
     initPromoMarquee();
     initCardMask(); 
+    initLiveChat();
     updateCartBadge(); 
     updateAuthUI();
     handleRouting();
@@ -80,16 +101,51 @@ window.addEventListener('DOMContentLoaded', () => {
 
 window.navigateTo = function(path) { window.location.hash = path; }
 
+// 🌐 ენის გადამრთველის ინიციალიზაცია და ინტერფეისის განახლება
+function initLangSelector() {
+    let langContainer = document.getElementById('langSelectorContainer');
+    if (!langContainer) {
+        langContainer = document.createElement('div');
+        langContainer.id = "langSelectorContainer";
+        langContainer.className = "fixed top-4 right-4 z-50 flex gap-2 bg-white/90 backdrop-blur border border-slate-200 p-1.5 rounded-xl shadow-sm";
+        document.body.appendChild(langContainer);
+    }
+    langContainer.innerHTML = `
+        <button onclick="window.changeLanguage('ka')" class="px-2.5 py-1 text-xs font-bold rounded-lg transition-all ${currentLang === 'ka' ? 'bg-slate-900 text-white' : 'text-slate-600 hover:bg-slate-100'}">GE</button>
+        <button onclick="window.changeLanguage('en')" class="px-2.5 py-1 text-xs font-bold rounded-lg transition-all ${currentLang === 'en' ? 'bg-slate-900 text-white' : 'text-slate-600 hover:bg-slate-100'}">EN</button>
+    `;
+    
+    const searchInput = document.getElementById('searchInput');
+    if (searchInput) searchInput.placeholder = translations[currentLang].searchPlaceholder;
+}
+
+window.changeLanguage = function(lang) {
+    currentLang = lang;
+    localStorage.setItem('techshop_lang', lang);
+    initLangSelector();
+    initFilters();
+    initBrandFilters();
+    filterProducts();
+    if (window.location.hash.startsWith('#product/')) {
+        renderProductDetail(parseInt(window.location.hash.replace('#product/', '')));
+    }
+    const chatHeaderTitle = document.getElementById('chatHeaderTitle');
+    if (chatHeaderTitle) chatHeaderTitle.innerText = translations[currentLang].chatHeader;
+}
+
 // კატეგორიები
 function initFilters() {
     const container = document.getElementById('categoryFilters');
     if (!container) return;
     const categories = ['all', ...new Set(products.map(p => p.cat))];
-    const geoLabels = { 'all': 'ყველა კატეგორია', 'Audio': 'აუდიო', 'Phones': 'სმარტფონები', 'Laptops': 'ლეპტოპები', 'Wearables': 'აქსესუარები', 'Cameras': 'კამერები' };
+    const geoLabels = {
+        ka: { 'all': 'ყველა კატეგორია', 'Audio': 'აუდიო', 'Phones': 'სმარტფონები', 'Laptops': 'ლეპტოპები', 'Wearables': 'აქსესუარები', 'Cameras': 'კამერები' },
+        en: { 'all': 'All Categories', 'Audio': 'Audio', 'Phones': 'Smartphones', 'Laptops': 'Laptops', 'Wearables': 'Accessories', 'Cameras': 'Cameras' }
+    };
     container.innerHTML = categories.map(c => `
         <li class="flex items-center gap-3 py-1">
             <input type="radio" name="cat" id="cat_${c}" ${c==='all'?'checked':''} onclick="setCategory('${c}')" class="w-4 h-4 text-slate-900 border-slate-300 accent-slate-900 cursor-pointer">
-            <label for="cat_${c}" class="select-none cursor-pointer text-slate-600 hover:text-slate-900 text-sm font-medium">${geoLabels[c] || c}</label>
+            <label for="cat_${c}" class="select-none cursor-pointer text-slate-600 hover:text-slate-900 text-sm font-medium">${geoLabels[currentLang][c] || c}</label>
         </li>
     `).join('');
 }
@@ -103,7 +159,7 @@ function initBrandFilters() {
     container.innerHTML = brands.map(b => `
         <li class="flex items-center gap-3 py-1">
             <input type="radio" name="brand" id="brand_${b}" ${b==='all'?'checked':''} onclick="setBrand('${b}')" class="w-4 h-4 text-slate-900 border-slate-300 accent-slate-900 cursor-pointer">
-            <label for="brand_${b}" class="select-none cursor-pointer text-slate-600 hover:text-slate-900 text-sm font-medium">${b === 'all' ? 'ყველა ბრენდი' : b}</label>
+            <label for="brand_${b}" class="select-none cursor-pointer text-slate-600 hover:text-slate-900 text-sm font-medium">${b === 'all' ? translations[currentLang].allBrands : b}</label>
         </li>
     `).join('');
 }
@@ -125,7 +181,6 @@ window.filterProducts = function() {
     renderCatalog(filtered);
 }
 
-// პრომო კარუსელი წითელი სათაურებით
 function initPromoMarquee() {
     const container = document.getElementById('promoMarquee');
     if (!container) return;
@@ -181,8 +236,8 @@ function generateCards(list, targetGrid) {
                 <div class="flex items-center justify-between mt-5 gap-2">
                     <span class="text-base font-black text-slate-900 flex-shrink-0">$${p.price.toLocaleString()}</span>
                     <div class="flex items-center gap-1.5">
-                        <button onclick="buyNow(${p.id})" class="h-9 px-3 bg-amber-500 hover:bg-amber-600 text-slate-950 rounded-xl text-xs font-bold transition-all shadow-sm">ყიდვა</button>
-                        <button id="btn-add-${p.id}" onclick="addToCart(${p.id}, this)" class="h-9 w-9 bg-slate-900 text-white rounded-xl font-bold flex items-center justify-center text-lg transition-all shadow-sm">+</button>
+                        <button onclick="window.buyNow(${p.id})" class="h-9 px-3 bg-amber-500 hover:bg-amber-600 text-slate-950 rounded-xl text-xs font-bold transition-all shadow-sm">${translations[currentLang].buy}</button>
+                        <button id="btn-add-${p.id}" onclick="window.addToCart(${p.id})" class="h-9 w-9 bg-slate-900 text-white rounded-xl font-bold flex items-center justify-center text-lg transition-all shadow-sm">+</button>
                     </div>
                 </div>
             </div>
@@ -191,13 +246,16 @@ function generateCards(list, targetGrid) {
     });
 }
 
+// 📦 პროდუქტის დეტალური გვერდის რენდერი (Cross-selling-ით და ბოლოს ნანახებით)
 function renderProductDetail(id) {
     const p = products.find(x => x.id === id);
     const container = document.getElementById('productDetailContainer');
     if(!container) return;
     let specsHTML = '';
     for(let key in p.specs) { specsHTML += `<tr class="border-b border-slate-100"><td class="py-3 text-slate-400 text-sm w-1/3">${key}</td><td class="py-3 text-slate-800 text-sm font-semibold">${p.specs[key]}</td></tr>`; }
-    container.innerHTML = `
+    
+    // ძირითადი კონტენტი
+    let mainHTML = `
         <div class="bg-white border border-slate-200 rounded-3xl p-6 md:p-12 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
             <div class="aspect-square bg-slate-50 rounded-2xl flex items-center justify-center text-[140px] select-none">${p.emoji}</div>
             <div>
@@ -206,10 +264,130 @@ function renderProductDetail(id) {
                 <div class="text-3xl font-black text-slate-900 mb-6">$${p.price.toLocaleString()}</div>
                 <p class="text-slate-600 text-sm mb-8">${p.desc}</p>
                 <table class="w-full mb-8">${specsHTML}</table>
-                <button onclick="buyNow(${p.id})" class="px-8 py-4 bg-slate-900 text-white font-bold rounded-xl shadow-md">კალათაში დამატება და ყიდვა</button>
+                <button onclick="window.addToCart(${p.id}); window.navigateTo('cart')" class="w-full md:w-auto px-8 py-4 bg-slate-900 hover:bg-slate-800 text-white font-bold rounded-xl shadow-md transition-all">${translations[currentLang].addToCart} & ${translations[currentLang].buy}</button>
             </div>
         </div>
     `;
+
+    // 🔗 ჭკვიანი მსგავსი პროდუქტები (Cross-Selling ლოგიკა)
+    let relatedCat = p.cat;
+    if (p.cat === 'Phones') relatedCat = 'Wearables'; // სმარტფონებზე აქსესუარები
+    else if (p.cat === 'Laptops') relatedCat = 'Audio';
+    
+    let similarList = products.filter(item => item.cat === relatedCat && item.id !== p.id).slice(0, 3);
+    if(similarList.length === 0) similarList = products.filter(item => item.id !== p.id).slice(0, 3);
+
+    let similarHTML = `
+        <div class="mt-16">
+            <h3 class="text-xl font-bold text-slate-900 mb-6">${translations[currentLang].similarProducts}</h3>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-6" id="similarGrid"></div>
+        </div>
+    `;
+
+    // 🕒 ბოლოს ნანახი ნივთების ბლოკი
+    let recentlyViewedHTML = `
+        <div class="mt-16 border-t border-slate-100 pt-12">
+            <h3 class="text-xl font-bold text-slate-900 mb-6">${translations[currentLang].recentlyViewed}</h3>
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-6" id="recentGrid"></div>
+        </div>
+    `;
+
+    container.innerHTML = mainHTML + similarHTML + recentlyViewedHTML;
+
+    // შიდა ბადეების შევსება
+    const similarGrid = document.getElementById('similarGrid');
+    if(similarGrid) generateCards(similarList, similarGrid);
+
+    const recentGrid = document.getElementById('recentGrid');
+    if(recentGrid) {
+        let recentIds = JSON.parse(localStorage.getItem('techshop_recent')) || [];
+        let recentList = recentIds.filter(rid => rid !== p.id).map(rid => products.find(x => x.id === rid)).filter(Boolean).slice(0, 4);
+        if(recentList.length) {
+            generateCards(recentList, recentGrid);
+        } else {
+            recentGrid.parentElement.classList.add('hidden');
+        }
+    }
+}
+
+// ბოლოს ნანახი ნივთების თრექინგი
+function trackRecentlyViewed(id) {
+    let recent = JSON.parse(localStorage.getItem('techshop_recent')) || [];
+    recent = recent.filter(x => x !== id);
+    recent.unshift(id);
+    localStorage.setItem('techshop_recent', JSON.stringify(recent.slice(0, 8)));
+}
+
+// 💬 Live Chat მოდული (Megi & Smart AI Assistant)
+function initLiveChat() {
+    if(document.getElementById('liveChatWidget')) return;
+
+    const widget = document.createElement('div');
+    widget.id = "liveChatWidget";
+    widget.className = "fixed bottom-6 right-6 z-50 font-sans text-sm select-none";
+    widget.innerHTML = `
+        <button onclick="window.toggleChatWindow()" id="chatTriggerBtn" class="w-14 h-14 bg-slate-900 hover:bg-slate-800 text-white rounded-full flex items-center justify-center shadow-2xl transition-all hover:scale-105 active:scale-95">
+            <span class="text-2xl">💬</span>
+        </button>
+        <div id="chatWindow" class="hidden absolute bottom-16 right-0 w-80 h-96 bg-white border border-slate-200 shadow-2xl rounded-2xl flex flex-col overflow-hidden transition-all">
+            <div class="bg-slate-900 text-white px-4 py-3 flex items-center gap-3">
+                <div class="w-8 h-8 rounded-full bg-amber-400 overflow-hidden flex items-center justify-center border border-white/20">
+                    <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=100" alt="Megi" class="w-full h-full object-cover">
+                </div>
+                <div>
+                    <div class="font-bold text-xs" id="chatHeaderTitle">${translations[currentLang].chatHeader}</div>
+                    <div class="text-[10px] text-emerald-400 flex items-center gap-1">● Online</div>
+                </div>
+                <button onclick="window.toggleChatWindow()" class="ml-auto text-white/60 hover:text-white font-bold text-base">&times;</button>
+            </div>
+            <div id="chatMessages" class="flex-1 p-4 overflow-y-auto space-y-3 bg-slate-50/50">
+                <div class="flex gap-2 max-w-[85%]">
+                    <div class="bg-white border border-slate-100 rounded-2xl rounded-tl-none p-3 shadow-sm text-xs text-slate-700">${translations[currentLang].chatWelcome}</div>
+                </div>
+            </div>
+            <form onsubmit="window.sendChatMessage(event)" class="border-t border-slate-100 p-2 bg-white flex gap-2">
+                <input type="text" id="chatInputField" required placeholder="${translations[currentLang].chatInputPlaceholder}" class="flex-1 px-3 py-1.5 border border-slate-200 rounded-xl focus:outline-none focus:border-slate-900 text-xs text-slate-800">
+                <button type="submit" class="bg-slate-900 text-white px-3 py-1.5 rounded-xl font-bold text-xs hover:bg-slate-800">→</button>
+            </form>
+        </div>
+    `;
+    document.body.appendChild(widget);
+}
+
+window.toggleChatWindow = function() {
+    const win = document.getElementById('chatWindow');
+    if(win) win.classList.toggle('hidden');
+}
+
+window.sendChatMessage = function(e) {
+    e.preventDefault();
+    const input = document.getElementById('chatInputField');
+    const container = document.getElementById('chatMessages');
+    if(!input || !input.value.trim() || !container) return;
+
+    const userText = input.value.trim();
+    
+    // მომხმარებლის შეტყობინება
+    container.innerHTML += `
+        <div class="flex gap-2 max-w-[85%] ml-auto justify-end">
+            <div class="bg-slate-900 text-white rounded-2xl rounded-tr-none p-3 shadow-sm text-xs">${userText}</div>
+        </div>
+    `;
+    input.value = '';
+    container.scrollTop = container.scrollHeight;
+
+    // AI პასუხის იმიტაცია
+    setTimeout(() => {
+        container.innerHTML += `
+            <div class="flex gap-2 max-w-[85%]">
+                <div class="bg-white border border-slate-100 rounded-2xl rounded-tl-none p-3 shadow-sm text-xs text-slate-700">
+                    <span class="font-bold text-[10px] text-amber-600 block mb-1">AI Assistant</span>
+                    ${translations[currentLang].chatAiReply}
+                </div>
+            </div>
+        `;
+        container.scrollTop = container.scrollHeight;
+    }, 1000);
 }
 
 // 💳 განვადებისა და გადახდის ტაბების სისტემა
@@ -238,6 +416,11 @@ window.switchPaymentTab = function(type) {
 
 // გადახდის / განვადების დამუშავება
 window.processPayment = function() {
+    if(!cart.length) {
+        showToast('⚠️ კალათა ცარიელია!');
+        return;
+    }
+
     if (paymentMethod === 'card') {
         const cardInput = document.getElementById('cardNumber');
         if(!cardInput || cardInput.value.replace(/\s/g, '').length < 16) {
@@ -256,11 +439,13 @@ window.processPayment = function() {
 
     setTimeout(() => {
         alert(paymentMethod === 'card' ? '🎉 გადახდა წარმატებით დასრულდა! მიწოდება უფასოა.' : '🎉 განვადების მოთხოვნა წარმატებით გაიგზავნა ბანკში!');
-        cart = []; saveCart(); updateCartBadge(); navigateTo('');
+        cart = []; 
+        saveCart(); 
+        updateCartBadge(); 
+        navigateTo('');
     }, 2000);
 }
 
-// 📄 წესებისა და გარანტიების მოდალები
 window.openPolicy = function(type) {
     const data = policyData[type];
     if(!data) return;
@@ -304,28 +489,38 @@ function updateAuthUI() {
 }
 
 function saveCart() { localStorage.setItem('techshop_cart', JSON.stringify(cart)); }
-window.addToCart = function(id, buttonElement = null) {
+
+window.addToCart = function(id) {
     const p = products.find(x => x.id === id);
     const exist = cart.find(x => x.id === id);
     if(exist) { exist.qty++; } else { cart.push({...p, qty: 1}); }
-    saveCart(); updateCartBadge(); showToast(`✅ ${p.name} დაემატა კალათაში!`);
+    saveCart(); 
+    updateCartBadge(); 
+    showToast(`✅ ${p.name} დაემატა კალათაში!`);
 }
+
 window.buyNow = function(id) {
     const p = products.find(x => x.id === id);
     const exist = cart.find(x => x.id === id);
     if(!exist) { cart.push({...p, qty: 1}); }
-    saveCart(); updateCartBadge(); navigateTo('cart');
+    saveCart(); 
+    updateCartBadge(); 
+    navigateTo('cart');
 }
+
 function updateCartBadge() {
     const badge = document.getElementById('cartBadge');
     if(badge) badge.textContent = cart.reduce((acc, curr) => acc + curr.qty, 0);
 }
+
 window.chQty = function(id, delta) {
     const item = cart.find(x => x.id === id);
     if(!item) return;
     item.qty += delta;
     if(item.qty <= 0) cart = cart.filter(x => x.id !== id);
-    saveCart(); updateCartBadge(); renderCartPage();
+    saveCart(); 
+    updateCartBadge(); 
+    renderCartPage();
 }
 
 function renderCartPage() {
@@ -340,7 +535,7 @@ function renderCartPage() {
         if(layout) layout.classList.add('hidden');
         const emptyBlock = document.createElement('div');
         emptyBlock.className = "empty-cart-notice text-center py-20 bg-white border border-slate-200 rounded-2xl p-8 w-full";
-        emptyBlock.innerHTML = `<p class="font-bold text-slate-900 text-lg">თქვენი კალათა ცარიელია</p><button onclick="navigateTo('')" class="mt-6 px-6 py-3 bg-slate-900 text-white font-bold rounded-xl text-sm">კატალოგში დაბრუნება</button>`;
+        emptyBlock.innerHTML = `<p class="font-bold text-slate-900 text-lg">${translations[currentLang].emptyCart}</p><button onclick="navigateTo('')" class="mt-6 px-6 py-3 bg-slate-900 text-white font-bold rounded-xl text-sm">${translations[currentLang].backToCatalog}</button>`;
         cartView.appendChild(emptyBlock);
         return;
     }
@@ -357,9 +552,9 @@ function renderCartPage() {
                     </div>
                 </div>
                 <div class="flex items-center border border-slate-200 rounded-lg bg-slate-50 overflow-hidden flex-shrink-0">
-                    <button onclick="chQty(${item.id}, -1)" class="px-3 py-1 font-bold text-slate-500">−</button>
+                    <button onclick="window.chQty(${item.id}, -1)" class="px-3 py-1 font-bold text-slate-500">−</button>
                     <span class="px-2 text-xs font-bold text-slate-800 min-w-[20px] text-center">${item.qty}</span>
-                    <button onclick="chQty(${item.id}, 1)" class="px-3 py-1 font-bold text-slate-500">+</button>
+                    <button onclick="window.chQty(${item.id}, 1)" class="px-3 py-1 font-bold text-slate-500">+</button>
                 </div>
             </div>
         `).join('');
@@ -384,16 +579,30 @@ function showToast(msg) {
     }, 3000);
 }
 
+function toggleAiChat() {
+    const chatWindow = document.getElementById('aiChatWindow');
+    if (chatWindow) {
+        chatWindow.classList.toggle('hidden');
+    }
+}
+
 function initCardMask() {
     document.addEventListener('input', function (e) {
         if (e.target && e.target.id === 'cardNumber') {
-            let cursorPosition = e.target.selectionStart;
-            let originalLength = e.target.value.length;
-            let sanitized = e.target.value.replace(/[^\d]/g, '');
-            let formatted = sanitized.replace(/(.{4})/g, '$1 ').trim();
-            e.target.value = formatted.substring(0, 19);
-            cursorPosition = cursorPosition + (e.target.value.length - originalLength);
-            e.target.setSelectionRange(cursorPosition, cursorPosition);
+            let value = e.target.value.replace(/\s+/g, '').replace(/[^0-9]/gi, '');
+            let matches = value.match(/\d{4,16}/g);
+            let match = matches && matches[0] || '';
+            let parts = [];
+
+            for (let i=0, len=match.length; i<len; i+=4) {
+                parts.push(match.substring(i, i+4));
+            }
+
+            if (parts.length > 0) {
+                e.target.value = parts.join(' ');
+            } else {
+                e.target.value = value;
+            }
         }
     });
 }
