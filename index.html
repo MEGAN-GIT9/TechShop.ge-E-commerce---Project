@@ -7,19 +7,36 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
-    
         body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #f7f9fa; }
+        @keyframes marquee {
+            0% { transform: translateX(0%); }
+            100% { transform: translateX(-50%); }
+        }
+        .animate-marquee {
+            display: flex;
+            width: max-content;
+            animation: marquee 25s linear infinite;
+        }
+        .animate-marquee:hover { animation-play-state: paused; }
     </style>
 </head>
 <body class="text-slate-900 min-h-screen flex flex-col">
 
+    <!-- ნავიგაცია -->
     <nav class="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-200 px-4 md:px-12 h-16 flex items-center justify-between">
-        <a href="#" class="text-2xl font-extrabold tracking-tight text-slate-900 flex items-center gap-1">
-            <span>TechShop</span><span class="text-amber-500 animate-pulse">⚡</span>
-        </a>
+        <div class="flex items-center gap-6">
+            <a href="#" class="text-2xl font-extrabold tracking-tight text-slate-900 flex items-center gap-1">
+                <span>TechShop</span><span class="text-amber-500 animate-pulse">⚡</span>
+            </a>
+            <div class="hidden lg:flex items-center gap-4 text-sm font-semibold text-slate-600">
+                <a href="#" class="hover:text-slate-900 transition-colors">მთავარი</a>
+                <a href="#discounts" class="hover:text-slate-900 transition-colors flex items-center gap-1 text-rose-600">% ფასდაკლებები</a>
+                <a href="#about" class="hover:text-slate-900 transition-colors">ჩვენ შესახებ</a>
+            </div>
+        </div>
         
-        <div class="flex items-center gap-6 w-full max-w-2xl justify-end">
-            <div class="relative w-full max-w-md hidden sm:block">
+        <div class="flex items-center gap-4 w-full max-w-xl justify-end">
+            <div class="relative w-full max-w-xs hidden sm:block">
                 <div class="absolute inset-y-0 left-3 flex items-center pointer-events-none text-slate-400">
                     <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
                 </div>
@@ -27,6 +44,10 @@
                        class="w-full pl-10 pr-4 py-2 bg-slate-100 border border-transparent rounded-xl text-sm focus:bg-white focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20 outline-none transition-all">
             </div>
             
+            <button onclick="navigateTo('auth')" id="navAuthBtn" class="text-sm font-bold text-slate-700 hover:text-slate-900 bg-slate-100 px-4 py-2 rounded-xl transition-all">
+                🔑 შესვლა
+            </button>
+
             <button onclick="navigateTo('cart')" class="relative flex items-center gap-2 bg-slate-900 hover:bg-slate-800 text-white px-5 py-2.5 rounded-xl text-sm font-bold transition-all shadow-sm">
                 <span>🛒 კალათა</span>
                 <span id="cartBadge" class="absolute -top-2 -right-2 bg-amber-500 text-slate-950 text-xs font-black rounded-full h-5 w-5 flex items-center justify-center border-2 border-white">0</span>
@@ -34,18 +55,25 @@
         </div>
     </nav>
 
+    <div class="lg:hidden bg-white border-b border-slate-200 px-4 py-2 flex gap-4 text-xs font-bold text-slate-600 justify-center">
+        <a href="#" class="hover:text-slate-900">მთავარი</a>
+        <a href="#discounts" class="text-rose-600">% ფასდაკლებები</a>
+        <a href="#about" class="hover:text-slate-900">ჩვენ შესახებ</a>
+    </div>
+
+    <!-- ================= 1. მთავარი გვერდი ================= -->
     <div id="homeView" class="view-section p-4 md:p-12 max-w-7xl mx-auto w-full flex-grow">
-        
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-10">
+        <!-- ბანერები -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
             <div class="lg:col-span-2 bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 rounded-3xl p-8 md:p-12 flex flex-col justify-between relative overflow-hidden shadow-md group min-h-[320px]">
                 <div class="absolute right-0 bottom-0 text-[160px] md:text-[200px] opacity-20 select-none pointer-events-none transform translate-x-10 translate-y-10 group-hover:scale-110 transition-transform duration-500">⚡</div>
                 <div class="relative z-10 max-w-md">
                     <span class="bg-amber-500 text-slate-950 text-[10px] font-extrabold uppercase px-2.5 py-1 rounded-md tracking-wider">სუპერ შეთავაზება</span>
                     <h1 class="text-3xl md:text-4xl font-black text-white tracking-tight mt-4 mb-3 leading-tight">გრანდიოზული ფასდაკლება ციფრულ ტექნიკაზე!</h1>
-                    <p class="text-slate-300 text-sm md:text-base font-medium mb-6">მიიღე საუკეთესო ფასები უახლეს სმარტფონებზე, ლეპტოპებსა და პრემიუმ აქსესუარებზე.</p>
+                    <p class="text-slate-300 text-sm md:text-base font-medium mb-6">მიიღე საუკეთესო ფასები, უფასო მიწოდება მთელ საქართველოში და ონლაინ განვადება 0%-დან.</p>
                 </div>
                 <div class="relative z-10">
-                    <button onclick="document.getElementById('priceMax').value=1500; filterProducts();" class="bg-white hover:bg-amber-500 hover:text-slate-950 text-slate-900 font-bold px-6 py-3 rounded-xl text-sm transition-all shadow-sm">იყიდე ახლავე</button>
+                    <a href="#discounts" class="inline-block bg-white hover:bg-amber-500 hover:text-slate-950 text-slate-900 font-bold px-6 py-3 rounded-xl text-sm transition-all shadow-sm">იხილეთ ფასდაკლებები</a>
                 </div>
             </div>
 
@@ -69,75 +97,161 @@
             </div>
         </div>
 
-        <div class="block sm:hidden mb-4">
-            <input type="text" placeholder="მოძებნე პროდუქტი..." id="mobileSearchInput" oninput="syncAndFilter(this)" class="w-full p-3 bg-white border border-slate-200 rounded-xl text-sm outline-none">
+        <!-- მოძრავი პრომო სლაიდერი -->
+        <div class="mb-10 bg-white border border-slate-200 rounded-2xl py-4 overflow-hidden shadow-sm relative">
+            <div class="absolute top-0 left-0 bottom-0 bg-gradient-to-r from-white to-transparent w-12 z-10 pointer-events-none"></div>
+            <div class="absolute top-0 right-0 bottom-0 bg-gradient-to-l from-white to-transparent w-12 z-10 pointer-events-none"></div>
+            <div class="overflow-hidden w-full">
+                <div id="promoMarquee" class="animate-marquee gap-8"></div>
+            </div>
         </div>
 
+        <!-- კატალოგის ლეიაუტი ფილტრებით -->
         <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
-            <aside class="lg:col-span-1 bg-white border border-slate-200/80 rounded-2xl p-6 h-fit sticky top-24">
-                <div class="mb-6">
+            <aside class="lg:col-span-1 bg-white border border-slate-200/80 rounded-2xl p-6 h-fit sticky top-24 space-y-6">
+                <div>
                     <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3">კატეგორიები</h4>
-                    <ul id="categoryFilters" class="space-y-2 text-sm font-medium text-slate-600">
-                        </ul>
+                    <ul id="categoryFilters" class="space-y-2 text-sm font-medium text-slate-600"></ul>
+                </div>
+                <div>
+                    <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3">ბრენდები</h4>
+                    <ul id="brandFilters" class="space-y-2 text-sm font-medium text-slate-600"></ul>
                 </div>
                 <div>
                     <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3">ფასის ფილტრი ($)</h4>
                     <div class="flex items-center gap-2">
-                        <input type="number" id="priceMin" placeholder="Min" oninput="filterProducts()" class="w-full p-2 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:bg-white outline-none">
+                        <input type="number" id="priceMin" placeholder="Min" oninput="filterProducts()" class="w-full p-2 bg-slate-50 border border-slate-200 rounded-lg text-sm outline-none">
                         <span class="text-slate-400">-</span>
-                        <input type="number" id="priceMax" placeholder="Max" oninput="filterProducts()" class="w-full p-2 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:bg-white outline-none">
+                        <input type="number" id="priceMax" placeholder="Max" oninput="filterProducts()" class="w-full p-2 bg-slate-50 border border-slate-200 rounded-lg text-sm outline-none">
                     </div>
                 </div>
             </aside>
-
             <main class="lg:col-span-3">
-                <div id="productsGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-                    </div>
+                <div id="productsGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6"></div>
             </main>
         </div>
     </div>
 
-    <div id="detailView" class="view-section hidden p-4 md:p-12 max-w-6xl mx-auto w-full flex-grow">
-        <button onclick="navigateTo('')" class="mb-6 inline-flex items-center gap-2 text-sm font-semibold text-slate-600 hover:text-slate-900 bg-white border border-slate-200 px-4 py-2 rounded-xl shadow-sm transition-all">
-            ← კატალოგში დაბრუნება
-        </button>
-        <div id="productDetailContainer">
+    <!-- ================= 2. ფასდაკლებების გვერდი ================= -->
+    <div id="discountsView" class="view-section hidden p-4 md:p-12 max-w-7xl mx-auto w-full flex-grow">
+        <div class="mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div>
+                <h2 class="text-3xl font-black tracking-tight text-rose-600 flex items-center gap-2">🔥 ცხელი ფასდაკლებები</h2>
+                <p class="text-slate-500 text-sm font-medium mt-1">მხოლოდ აქცია/Sale სტატუსის მქონე ექსკლუზიური შეთავაზებები.</p>
             </div>
+            <button onclick="navigateTo('')" class="text-sm font-bold bg-slate-100 hover:bg-slate-200 px-4 py-2 rounded-xl transition-all">← კატალოგში დაბრუნება</button>
+        </div>
+        <div id="discountsGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"></div>
     </div>
 
+    <!-- ================= 3. ავტორიზაციის გვერდი ================= -->
+    <div id="authView" class="view-section hidden p-4 md:p-12 max-w-md mx-auto w-full flex-grow flex items-center justify-center">
+        <div class="bg-white border border-slate-200 rounded-3xl p-8 shadow-sm w-full">
+            <h2 id="authTitle" class="text-2xl font-black text-slate-900 mb-2">სისტემაში შესვლა</h2>
+            <p id="authSubtitle" class="text-sm font-medium text-slate-400 mb-6">მიიღე წვდომა პრემიუმ ფუნქციებზე.</p>
+            <form id="authForm" onsubmit="handleAuthSubmit(event)" class="space-y-4">
+                <div class="flex flex-col gap-1">
+                    <label class="text-xs font-bold uppercase text-slate-400">ელ-ფოსტა</label>
+                    <input type="email" id="authEmail" required placeholder="name@example.com" class="p-3 border border-slate-200 rounded-xl text-sm outline-none">
+                </div>
+                <div class="flex flex-col gap-1">
+                    <label class="text-xs font-bold uppercase text-slate-400">პაროლი</label>
+                    <input type="password" id="authPassword" required placeholder="••••••••" class="p-3 border border-slate-200 rounded-xl text-sm outline-none">
+                </div>
+                <button type="submit" id="authSubmitBtn" class="w-full bg-slate-900 hover:bg-slate-800 text-white font-bold py-3 rounded-xl text-sm shadow-sm">შესვლა</button>
+            </form>
+            <div class="relative my-6 flex items-center justify-center">
+                <div class="absolute inset-0 bg-slate-100 h-px w-full"></div>
+                <span class="relative bg-white px-3 text-xs font-bold text-slate-400 uppercase">ან</span>
+            </div>
+            <button onclick="handleGoogleLogin()" class="w-full border border-slate-200 hover:bg-slate-50 text-slate-700 font-bold py-3 rounded-xl text-sm flex items-center justify-center gap-2 shadow-sm">
+                <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#EA4335" d="M12.24 10.285V14.4h6.887c-.315 1.886-2.135 5.542-6.887 5.542-4.09 0-7.43-3.39-7.43-7.57s3.34-7.571 7.43-7.571c2.33 0 3.89.97 4.78 1.83l3.25-3.14C18.19 1.57 15.42 1 12.24 1 6.033 1 1 6.033 1 12.24s5.033 11.24 11.24 11.24c6.478 0 10.793-4.537 10.793-10.986 0-.745-.08-1.32-.176-1.714H12.24z"/></svg>
+                Google-ით ავტორიზაცია
+            </button>
+            <div class="text-center mt-6"><button onclick="toggleAuthMode()" id="authToggleBtn" class="text-xs font-bold text-amber-600 hover:underline">არ გაქვს ანგარიში? დარეგისტრირდი</button></div>
+        </div>
+    </div>
+
+    <!-- ================= 4. ჩვენ შესახებ გვერდი ================= -->
+    <div id="aboutView" class="view-section hidden p-4 md:p-12 max-w-4xl mx-auto w-full flex-grow">
+        <div class="bg-white border border-slate-200 rounded-3xl p-8 md:p-12 shadow-sm">
+            <span class="text-xs font-extrabold uppercase tracking-widest text-amber-500">TechShop Electronics</span>
+            <h2 class="text-3xl font-black tracking-tight text-slate-900 mt-2 mb-6">ინოვაციური ონლაინ პლატფორმა</h2>
+            <div class="space-y-6 text-slate-600 leading-relaxed font-medium">
+                <p>**TechShop** წარმოადგენს თანამედროვე, სრულად ავტომატიზებულ ელექტრონული კომერციის პლატფორმას, რომელიც მომხმარებელს სთავაზობს პრემიუმ კლასის ციფრულ ტექნიკას, სმარტფონებსა და აქსესუარებს საუკეთესო პირობებით.</p>
+                <p class="text-emerald-600 bg-emerald-50 border border-emerald-200 p-4 rounded-xl font-bold">🚚 მნიშვნელოვანი შეტყობინება: ჩვენთან მიწოდება არის სრულიად უფასო საქართველოს მასშტაბით (თბილისსა და ნებისმიერ რეგიონში)! შეკვეთილ ნივთს კურიერი პირდაპირ კართან მოგიტანთ ყოველგვარი დამატებითი ხარჯის გარეშე.</p>
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 pt-6 border-t border-slate-100">
+                    <div class="bg-slate-50 p-4 rounded-2xl"><div class="text-2xl mb-1">📦</div><h4 class="font-bold text-slate-900 text-sm">უფასო მიწოდება</h4><p class="text-xs text-slate-400 mt-1">საქართველოს ნებისმიერ წერტილში 0 ლარად.</p></div>
+                    <div class="bg-slate-50 p-4 rounded-2xl"><div class="text-2xl mb-1">🏦</div><h4 class="font-bold text-slate-900 text-sm">ონლაინ განვადება</h4><p class="text-xs text-slate-400 mt-1">BOG, TBC და Credo ბანკების მხარდაჭერა.</p></div>
+                    <div class="bg-slate-50 p-4 rounded-2xl"><div class="text-2xl mb-1">🛡️</div><h4 class="font-bold text-slate-900 text-sm">ოფიციალური გარანტია</h4><p class="text-xs text-slate-400 mt-1">მინიმუმ 1 წლიანი სერვის-გარანტია.</p></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= 5. პროდუქტის შიდა გვერდი ================= -->
+    <div id="detailView" class="view-section hidden p-4 md:p-12 max-w-6xl mx-auto w-full flex-grow">
+        <button onclick="navigateTo('')" class="mb-6 inline-flex items-center gap-2 text-sm font-semibold text-slate-600 hover:text-slate-900 bg-white border border-slate-200 px-4 py-2 rounded-xl shadow-sm transition-all">← კატალოგში დაბრუნება</button>
+        <div id="productDetailContainer"></div>
+    </div>
+
+    <!-- ================= 6. კალათის და ჩექაუთის გვერდი ================= -->
     <div id="cartView" class="view-section hidden p-4 md:p-12 max-w-7xl mx-auto w-full flex-grow">
-        <h2 class="text-2xl font-extrabold tracking-tight text-slate-900 mb-6">თქვენი კალათა & ჩექაუთი</h2>
+        <h2 class="text-2xl font-extrabold tracking-tight text-slate-900 mb-6">შეკვეთის გაფორმება</h2>
         
         <div id="checkoutLayout" class="grid grid-cols-1 lg:grid-cols-3 gap-8">
             <div class="lg:col-span-2 space-y-6">
                 <div class="bg-white border border-slate-200 rounded-2xl p-6">
                     <h3 class="text-lg font-bold text-slate-900 mb-4 border-b border-slate-100 pb-3">1. კალათის პროდუქტები</h3>
-                    <div id="cartItemsList" class="divide-y divide-slate-100 space-y-4">
-                        </div>
+                    <div id="cartItemsList" class="divide-y divide-slate-100 space-y-4"></div>
                 </div>
 
                 <div class="bg-white border border-slate-200 rounded-2xl p-6">
-                    <h3 class="text-lg font-bold text-slate-900 mb-4 border-b border-slate-100 pb-3">2. საკონტაქტო და მიწოდების ინფორმაცია</h3>
+                    <h3 class="text-lg font-bold text-slate-900 mb-4 border-b border-slate-100 pb-3">2. მიწოდების ინფორმაცია (მიწოდება უფასოა)</h3>
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <div class="flex flex-col gap-1"><label class="text-xs font-bold uppercase text-slate-400">სახელი</label><input type="text" placeholder="ალექსი" class="p-3 border border-slate-200 rounded-xl text-sm outline-none focus:border-slate-900"></div>
-                        <div class="flex flex-col gap-1"><label class="text-xs font-bold uppercase text-slate-400">გვარი</label><input type="text" placeholder="მელიქიშვილი" class="p-3 border border-slate-200 rounded-xl text-sm outline-none focus:border-slate-900"></div>
-                        <div class="flex flex-col gap-1 sm:col-span-2"><label class="text-xs font-bold uppercase text-slate-400">მისამართი</label><input type="text" placeholder="ჭავჭავაძის გამზ. 22, თბილისი" class="p-3 border border-slate-200 rounded-xl text-sm outline-none focus:border-slate-900"></div>
-                        <div class="flex flex-col gap-1"><label class="text-xs font-bold uppercase text-slate-400">ტელეფონი</label><input type="tel" placeholder="+995 5__ ___ ___" class="p-3 border border-slate-200 rounded-xl text-sm outline-none focus:border-slate-900"></div>
-                        <div class="flex flex-col gap-1"><label class="text-xs font-bold uppercase text-slate-400">ელ-ფოსტა</label><input type="email" placeholder="alex@example.com" class="p-3 border border-slate-200 rounded-xl text-sm outline-none focus:border-slate-900"></div>
+                        <input type="text" placeholder="სახელი" class="p-3 border border-slate-200 rounded-xl text-sm outline-none">
+                        <input type="text" placeholder="გვარი" class="p-3 border border-slate-200 rounded-xl text-sm outline-none">
+                        <input type="text" placeholder="სრული მისამართი (მაგ: ბათუმი, რუსთაველის 5)" class="p-3 border border-slate-200 rounded-xl text-sm outline-none sm:col-span-2">
                     </div>
                 </div>
 
                 <div class="bg-white border border-slate-200 rounded-2xl p-6">
-                    <h3 class="text-lg font-bold text-slate-900 mb-2 border-b border-slate-100 pb-3">3. უსაფრთხო გადახდა</h3>
-                    <p class="text-xs text-slate-400 mb-4">ყველა ტრანზაქცია დაცულია და დაშიფრულია SSL პროტოკოლით.</p>
-                    <div class="bg-slate-50 border border-slate-200 rounded-xl p-5">
+                    <h3 class="text-lg font-bold text-slate-900 mb-2 border-b border-slate-100 pb-3">3. გადახდის ან განვადების მეთოდი</h3>
+                    
+                    <!-- მეთოდების გადასართავი ტაბები -->
+                    <div class="flex border-b border-slate-200 mb-4 text-sm font-bold">
+                        <button onclick="switchPaymentTab('card')" id="tab-card" class="py-2 px-4 text-slate-900 border-b-2 border-slate-900">💳 საბანკო ბარათი</button>
+                        <button onclick="switchPaymentTab('installment')" id="tab-installment" class="py-2 px-4 text-slate-400 hover:text-slate-600">🏦 ონლაინ განვადება</button>
+                    </div>
+
+                    <!-- ბარათით გადახდა -->
+                    <div id="payment-card-block" class="bg-slate-50 border border-slate-200 rounded-xl p-5">
                         <div class="flex flex-col gap-1 mb-4">
                             <label class="text-xs font-bold uppercase text-slate-400">ბარათის ნომერი</label>
-                            <input type="text" id="cardNumber" maxlength="19" placeholder="4242 •••• •••• 4242" class="p-3 border border-slate-200 rounded-xl text-sm bg-white outline-none focus:border-slate-900">
+                            <input type="text" id="cardNumber" maxlength="19" placeholder="4242 •••• •••• 4242" class="p-3 border border-slate-200 rounded-xl text-sm bg-white outline-none">
                         </div>
                         <div class="grid grid-cols-2 gap-4">
-                            <div class="flex flex-col gap-1"><label class="text-xs font-bold uppercase text-slate-400">მოქმედების ვადა</label><input type="text" placeholder="MM/YY" maxlength="5" class="p-3 border border-slate-200 rounded-xl text-sm bg-white outline-none focus:border-slate-900"></div>
-                            <div class="flex flex-col gap-1"><label class="text-xs font-bold uppercase text-slate-400">CVC / CVV</label><input type="password" placeholder="•••" maxlength="3" class="p-3 border border-slate-200 rounded-xl text-sm bg-white outline-none focus:border-slate-900"></div>
+                            <input type="text" placeholder="MM/YY" maxlength="5" class="p-3 border border-slate-200 rounded-xl text-sm bg-white outline-none">
+                            <input type="password" placeholder="CVC" maxlength="3" class="p-3 border border-slate-200 rounded-xl text-sm bg-white outline-none">
+                        </div>
+                    </div>
+
+                    <!-- განვადების ბლოკი -->
+                    <div id="payment-installment-block" class="hidden space-y-4">
+                        <p class="text-xs font-semibold text-slate-400">აირჩიეთ სასურველი ბანკი განვადების მისაღებად:</p>
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                            <label class="border-2 border-slate-200 rounded-xl p-4 flex flex-col items-center justify-center gap-2 cursor-pointer bg-white hover:border-orange-500 transition-all select-none">
+                                <input type="radio" name="bank_inst" value="BOG" class="accent-orange-500">
+                                <span class="text-sm font-extrabold text-orange-600">BOG განვადება</span>
+                            </label>
+                            <label class="border-2 border-slate-200 rounded-xl p-4 flex flex-col items-center justify-center gap-2 cursor-pointer bg-white hover:border-blue-600 transition-all select-none">
+                                <input type="radio" name="bank_inst" value="TBC" class="accent-blue-600">
+                                <span class="text-sm font-extrabold text-blue-600">TBC განვადება</span>
+                            </label>
+                            <label class="border-2 border-slate-200 rounded-xl p-4 flex flex-col items-center justify-center gap-2 cursor-pointer bg-white hover:border-amber-600 transition-all select-none">
+                                <input type="radio" name="bank_inst" value="CREDO" class="accent-amber-600">
+                                <span class="text-sm font-extrabold text-amber-600">CREDO განვადება</span>
+                            </label>
                         </div>
                     </div>
                 </div>
@@ -148,13 +262,13 @@
                     <h3 class="text-lg font-bold text-slate-900 mb-4">შეკვეთის რეზიუმე</h3>
                     <div class="space-y-3 text-sm font-medium border-b border-slate-100 pb-4">
                         <div class="flex justify-between text-slate-500"><span>პროდუქტები:</span><span id="summarySubtotal" class="text-slate-900">$0</span></div>
-                        <div class="flex justify-between text-slate-500"><span>მიწოდება:</span><span class="text-emerald-600 font-bold">უფასო</span></div>
+                        <div class="flex justify-between text-slate-500"><span>მიწოდება:</span><span class="text-emerald-600 font-bold">უფასო (საქართველო)</span></div>
                     </div>
                     <div class="flex justify-between items-center my-4">
-                        <span class="text-base font-bold text-slate-900">სულ გადასახდელი:</span>
+                        <span class="text-base font-bold text-slate-900">სულ:</span>
                         <span id="summaryTotal" class="text-2xl font-black text-slate-900">$0</span>
                     </div>
-                    <button onclick="processPayment()" class="w-full bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold py-4 rounded-xl transition-all shadow-sm text-center block">
+                    <button onclick="processPayment()" id="mainSubmitBtn" class="w-full bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold py-4 rounded-xl transition-all text-center block">
                         შეკვეთის განთავსება
                     </button>
                 </div>
@@ -162,13 +276,41 @@
         </div>
     </div>
 
+    <!-- ================= 7. პოლიტიკა / წესები და გარანტიები (Popups) ================= -->
+    <div id="policyModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-white rounded-3xl max-w-lg w-full p-6 md:p-8 max-h-[80vh] overflow-y-auto shadow-xl relative">
+            <button onclick="closePolicy()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-900 font-bold text-xl">✕</button>
+            <h3 id="policyModalTitle" class="text-xl font-black mb-4 text-slate-900">წესები და პირობები</h3>
+            <div id="policyModalContent" class="text-sm text-slate-600 leading-relaxed space-y-3 font-medium"></div>
+        </div>
+    </div>
+
     <div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 bg-slate-900 text-white text-sm font-semibold px-6 py-3 rounded-full shadow-xl opacity-0 translate-y-4 pointer-events-none transition-all duration-300 z-50"></div>
 
-    <footer class="bg-white border-t border-slate-200 mt-auto py-8 px-4 md:px-12 flex flex-col sm:flex-row items-center justify-between gap-4">
-        <div class="text-xl font-black text-slate-900 flex items-center gap-1">
-            <span>TechShop</span><span class="text-amber-500">⚡</span>
+    <!-- პროფესიონალური ფუტერი ინფორმაციული ბლოკებით -->
+    <footer class="bg-white border-t border-slate-200 mt-auto pt-10 pb-6 px-4 md:px-12">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 mb-8 border-b border-slate-100 pb-8">
+            <div>
+                <h4 class="text-sm font-black uppercase text-slate-900 mb-3 tracking-wider">TechShop ⚡</h4>
+                <p class="text-xs text-slate-500 font-medium leading-relaxed">პრემიუმ კლასის ონლაინ მარკეტპლეისი. მიიღეთ საუკეთესო ხარისხი, სწრაფი მომსახურება და გარანტირებული კმაყოფილება.</p>
+            </div>
+            <div>
+                <h4 class="text-sm font-black uppercase text-slate-900 mb-3 tracking-wider">მომხმარებლისთვის</h4>
+                <div class="flex flex-col gap-2 text-xs font-bold text-slate-500">
+                    <button onclick="openPolicy('terms')" class="text-left hover:text-slate-900 transition-colors">📄 წესები და პირობები</button>
+                    <button onclick="openPolicy('warranty')" class="text-left hover:text-slate-900 transition-colors">🛡️ საგარანტიო პირობები</button>
+                    <button onclick="openPolicy('return')" class="text-left hover:text-slate-900 transition-colors">🔄 ნივთის დაბრუნების პოლიტიკა</button>
+                </div>
+            </div>
+            <div>
+                <h4 class="text-sm font-black uppercase text-slate-900 mb-3 tracking-wider">სერვისები</h4>
+                <p class="text-xs text-slate-500 font-medium leading-relaxed">🚚 მიწოდება: <span class="text-emerald-600 font-bold">უფასო (საქართველოს მასშტაბით)</span></p>
+                <p class="text-xs text-slate-500 font-medium leading-relaxed mt-1">🏦 განვადება: საქართველოს ბანკი, თიბისი, კრედო</p>
+            </div>
         </div>
-        <p class="text-xs font-medium text-slate-400">© 2026 TechShop Electronics. ყველა უფლება დაცულია.</p>
+        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+            <p class="text-xs font-medium text-slate-400">© 2026 TechShop Electronics. ყველა უფლება დაცულია.</p>
+        </div>
     </footer>
 
     <script src="javascript.js"></script>
