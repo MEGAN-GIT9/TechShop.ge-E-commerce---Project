@@ -8,7 +8,7 @@ const products = [
     {id: 6, name: 'Bose QuietComfort Ultra', cat: 'Audio', price: 329, emoji: '🎵', stars: 4, reviews: 1123, badge: 'Sale', desc: 'მსოფლიო დონის ხმაურის დახშობა და იმერსიული აუდიო ფორმატი. შექმნილია მაქსიმალური კომფორტისთვის ხანგრძლივი მგზავრობისას.', specs: { 'ბრენდი': 'Bose', 'ტიპი': 'Over-Ear', 'ხმაურის დახშობა': 'Active Ultra', 'წონა': '250 გრ' }}
 ];
 
-// კალათის მონაცემები ინახება LocalStorage-ში გვერდის რეფრეშისგან დასაცავად
+// კალათის მონაცემები ინახება LocalStorage-ში
 let cart = JSON.parse(localStorage.getItem('techshop_cart')) || [];
 let selectedCategory = 'all';
 
@@ -34,12 +34,18 @@ function handleRouting() {
 window.addEventListener('hashchange', handleRouting);
 window.addEventListener('DOMContentLoaded', () => {
     initFilters();
-    updateCartBadge(); // კალათის საწყისი რაოდენობის განახლება
+    initCardMask(); 
+    updateCartBadge(); 
     handleRouting();
 });
 
-function navigateTo(path) { window.location.hash = path; }
-function syncAndFilter(el) { document.getElementById('searchInput').value = el.value; filterProducts(); }
+// გლობალური ნავიგაციის ფუნქციები HTML ივენთებისთვის
+window.navigateTo = function(path) { window.location.hash = path; }
+window.syncAndFilter = function(el) { 
+    const mainSearch = document.getElementById('searchInput');
+    if (mainSearch) mainSearch.value = el.value; 
+    filterProducts(); 
+}
 
 // კატეგორიების რადიო-ფილტრების ინიციალიზაცია
 function initFilters() {
@@ -47,29 +53,28 @@ function initFilters() {
     if (!container) return;
     
     const categories = ['all', ...new Set(products.map(p => p.cat))];
-    
-    // ქართული ვიზუალური დასახელებები
     const geoLabels = { 'all': 'ყველა კატეგორია', 'Audio': 'აუდიო', 'Phones': 'სმარტფონები', 'Laptops': 'ლეპტოპები', 'Wearables': 'აქსესუარები', 'Cameras': 'კამერები' };
 
     container.innerHTML = categories.map(c => `
         <li class="flex items-center gap-3 py-1">
             <input type="radio" name="cat" id="cat_${c}" ${c==='all'?'checked':''} onclick="setCategory('${c}')" class="w-4 h-4 text-slate-900 border-slate-300 focus:ring-slate-900 accent-slate-900 cursor-pointer">
-            <label for="cat_${c}" class="select-none cursor-pointer text-slate-600 hover:text-slate-900 transition-colors">${geoLabels[c] || c}</label>
+            <label for="cat_${c}" class="select-none cursor-pointer text-slate-600 hover:text-slate-900 transition-colors text-sm font-medium">${geoLabels[c] || c}</label>
         </li>
     `).join('');
 }
 
-function setCategory(cat) { selectedCategory = cat; filterProducts(); }
+window.setCategory = function(cat) { selectedCategory = cat; filterProducts(); }
 
-// პროდუქტების ფილტრაციის ლოგიკა
-function filterProducts() {
-    const searchQ = document.getElementById('searchInput').value.toLowerCase();
+window.filterProducts = function() {
+    const searchInput = document.getElementById('searchInput');
+    const searchQ = searchInput ? searchInput.value.toLowerCase() : '';
+    
     const minP = parseFloat(document.getElementById('priceMin').value) || 0;
     const maxP = parseFloat(document.getElementById('priceMax').value) || Infinity;
 
     const filtered = products.filter(p => {
         const matchCat = (selectedCategory === 'all' || p.cat === selectedCategory);
-        const matchSearch = p.name.toLowerCase().includes(searchQ); // გასწორდა: ეძებს მხოლოდ სახელით
+        const matchSearch = p.name.toLowerCase().includes(searchQ);
         const matchPrice = p.price >= minP && p.price <= maxP;
         return matchCat && matchSearch && matchPrice;
     });
@@ -105,9 +110,12 @@ function renderCatalog(list) {
                         <span class="text-slate-400 font-semibold ml-1">(${p.reviews})</span>
                     </div>
                 </div>
-                <div class="flex items-center justify-between mt-5">
-                    <span class="text-lg font-black text-slate-900">$${p.price.toLocaleString()}</span>
-                    <button onclick="addToCart(${p.id})" class="h-9 w-9 bg-slate-900 hover:bg-amber-500 hover:text-slate-950 text-white border-none rounded-xl font-bold flex items-center justify-center text-lg transition-all shadow-sm">+</button>
+                <div class="flex items-center justify-between mt-5 gap-2">
+                    <span class="text-base font-black text-slate-900 flex-shrink-0">$${p.price.toLocaleString()}</span>
+                    <div class="flex items-center gap-1.5">
+                        <button onclick="buyNow(${p.id})" class="h-9 px-3 bg-amber-500 hover:bg-amber-600 text-slate-950 rounded-xl text-xs font-bold transition-all shadow-sm">ყიდვა</button>
+                        <button id="btn-add-${p.id}" onclick="addToCart(${p.id}, this)" class="h-9 w-9 bg-slate-900 hover:bg-slate-800 text-white rounded-xl font-bold flex items-center justify-center text-lg transition-all shadow-sm">+</button>
+                    </div>
                 </div>
             </div>
         `;
@@ -115,7 +123,7 @@ function renderCatalog(list) {
     });
 }
 
-// პროდუქტის შიდა გვერდის რენდერი (დეტალური ხედი)
+// პროდუქტის შიდა გვერდის რენდერი
 function renderProductDetail(id) {
     const p = products.find(x => x.id === id);
     const container = document.getElementById('productDetailContainer');
@@ -140,25 +148,47 @@ function renderProductDetail(id) {
                 <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">ტექნიკური მონაცემები</h4>
                 <table class="w-full mb-8">${specsHTML}</table>
                 
-                <button onclick="addToCart(${p.id}); navigateTo('cart')" class="w-full sm:w-auto px-8 py-4 bg-slate-900 hover:bg-amber-500 hover:text-slate-950 text-white font-bold rounded-xl shadow-md transition-all">კალათაში დამატება და ყიდვა</button>
+                <button onclick="buyNow(${p.id})" class="w-full sm:w-auto px-8 py-4 bg-slate-900 hover:bg-amber-500 hover:text-slate-950 text-white font-bold rounded-xl shadow-md transition-all">კალათაში დამატება და ყიდვა</button>
             </div>
         </div>
     `;
 }
 
-// კალათის შენახვა
-function saveCart() {
-    localStorage.setItem('techshop_cart', JSON.stringify(cart));
-}
+function saveCart() { localStorage.setItem('techshop_cart', JSON.stringify(cart)); }
 
-// კალათის ივენთები და ფუნქციონალი
-function addToCart(id) {
+// კალათაში დამატების ფუნქცია ანიმაციით
+window.addToCart = function(id, buttonElement = null) {
     const p = products.find(x => x.id === id);
     const exist = cart.find(x => x.id === id);
     if(exist) { exist.qty++; } else { cart.push({...p, qty: 1}); }
     saveCart();
     updateCartBadge();
     showToast(`✅ ${p.name} წარმატებით დაემატა კალათაში!`);
+
+    // თუ ფუნქცია ბარათიდან იქნა გამოძახებული, ვრთავთ მწვანე პწიჩკის ეფექტს
+    const targetButton = buttonElement || document.getElementById(`btn-add-${id}`);
+    if (targetButton) {
+        const originalHTML = targetButton.innerHTML;
+        const originalBg = targetButton.className;
+        
+        targetButton.innerHTML = '✓';
+        targetButton.className = "h-9 w-9 bg-emerald-500 text-white rounded-xl font-bold flex items-center justify-center text-base transition-all shadow-sm scale-105 pointer-events-none";
+        
+        setTimeout(() => {
+            targetButton.innerHTML = originalHTML;
+            targetButton.className = originalBg;
+        }, 1000);
+    }
+}
+
+// „იყიდე ახლავე“ პირდაპირი ღილაკის ფუნქციონალი
+window.buyNow = function(id) {
+    const p = products.find(x => x.id === id);
+    const exist = cart.find(x => x.id === id);
+    if(!exist) { cart.push({...p, qty: 1}); }
+    saveCart();
+    updateCartBadge();
+    navigateTo('cart');
 }
 
 function updateCartBadge() {
@@ -166,7 +196,7 @@ function updateCartBadge() {
     if(badge) badge.textContent = cart.reduce((acc, curr) => acc + curr.qty, 0);
 }
 
-function chQty(id, delta) {
+window.chQty = function(id, delta) {
     const item = cart.find(x => x.id === id);
     if(!item) return;
     item.qty += delta;
@@ -176,7 +206,7 @@ function chQty(id, delta) {
     renderCartPage();
 }
 
-// კალათის გვერდის უსაფრთხო რენდერი (DOM სტრუქტურის განადგურების გარეშე)
+// კალათის გვერდის რენდერი
 function renderCartPage() {
     const listContainer = document.getElementById('cartItemsList');
     const layout = document.getElementById('checkoutLayout');
@@ -184,15 +214,14 @@ function renderCartPage() {
     
     if(!cartView) return;
 
-    // ვშლით ძველ დინამიურ "ცარიელი კალათის" ბლოკს თუ არსებობს
     const oldEmptyBlock = cartView.querySelector('.empty-cart-notice');
     if(oldEmptyBlock) oldEmptyBlock.remove();
 
     if(!cart.length) {
-        if(layout) layout.classList.add('hidden'); // ვმალავთ ჩექაუთს ნაცვლად შიგთავსის წაშლისა
+        if(layout) layout.classList.add('hidden');
         
         const emptyBlock = document.createElement('div');
-        emptyBlock.className = "empty-cart-notice text-center py-20 bg-white border border-slate-200 rounded-2xl max-w-xl mx-auto p-8 shadow-sm";
+        emptyBlock.className = "empty-cart-notice text-center py-20 bg-white border border-slate-200 rounded-2xl max-w-xl mx-auto p-8 shadow-sm w-full";
         emptyBlock.innerHTML = `
             <div class="text-5xl mb-4">🛒</div>
             <p class="font-bold text-slate-900 text-lg">თქვენი კალათა ცარიელია</p>
@@ -202,21 +231,21 @@ function renderCartPage() {
         return;
     }
 
-    if(layout) layout.classList.remove('hidden'); // ვაჩენთ ჩექაუთის ბლოკს
+    if(layout) layout.classList.remove('hidden');
 
     if(listContainer) {
         listContainer.innerHTML = cart.map(item => `
             <div class="flex items-center justify-between gap-4 py-4 first:pt-0 last:pb-0 border-b border-slate-100 last:border-0">
-                <div class="flex items-center gap-4">
-                    <div class="w-14 h-14 bg-slate-50 border border-slate-100 rounded-xl flex items-center justify-center text-2xl select-none">${item.emoji}</div>
-                    <div>
-                        <div class="font-bold text-sm text-slate-900 line-clamp-1">${item.name}</div>
+                <div class="flex items-center gap-4 min-w-0 flex-1">
+                    <div class="w-14 h-14 bg-slate-50 border border-slate-100 rounded-xl flex items-center justify-center text-2xl select-none flex-shrink-0">${item.emoji}</div>
+                    <div class="min-w-0 flex-1">
+                        <div class="font-bold text-sm text-slate-900 truncate">${item.name}</div>
                         <div class="text-xs font-bold text-amber-600 mt-0.5">$${item.price}</div>
                     </div>
                 </div>
-                <div class="flex items-center border border-slate-200 rounded-lg bg-slate-50 overflow-hidden">
+                <div class="flex items-center border border-slate-200 rounded-lg bg-slate-50 overflow-hidden flex-shrink-0">
                     <button onclick="chQty(${item.id}, -1)" class="px-3 py-1 font-bold text-slate-500 hover:bg-slate-200/60 transition-all">−</button>
-                    <span class="px-3 text-xs font-bold text-slate-800">${item.qty}</span>
+                    <span class="px-2 text-xs font-bold text-slate-800 min-w-[20px] text-center">${item.qty}</span>
                     <button onclick="chQty(${item.id}, 1)" class="px-3 py-1 font-bold text-slate-500 hover:bg-slate-200/60 transition-all">+</button>
                 </div>
             </div>
@@ -236,20 +265,19 @@ function showToast(msg) {
     const t = document.getElementById('toast');
     if(!t) return;
     t.textContent = msg;
-    t.classList.remove('opacity-0', 'translate-y-4');
+    t.classList.remove('opacity-0', 'translate-y-4', 'pointer-events-none');
     t.classList.add('opacity-100', 'translate-y-0');
     setTimeout(() => {
         t.classList.remove('opacity-100', 'translate-y-0');
-        t.classList.add('opacity-0', 'translate-y-4');
+        t.classList.add('opacity-0', 'translate-y-4', 'pointer-events-none');
     }, 3000);
 }
 
 // გადახდის პროცესი
-function processPayment() {
+window.processPayment = function() {
     const cardInput = document.getElementById('cardNumber');
     if(!cardInput) return;
 
-    // ვასუფთავებთ ველს გამოტოვებებისგან რეალური ციფრების დასათვლელად
     const cleanCardNum = cardInput.value.replace(/\s/g, '');
     
     if(cleanCardNum.length < 16) {
@@ -259,17 +287,21 @@ function processPayment() {
     
     showToast('🔄 ტრანზაქცია მუშავდება... გთხოვთ დაელოდოთ.');
     setTimeout(() => {
-        showToast('🎉 გადახდა წარმატებით დასრულდა! შეკვეთა მიღებულია.');
+        alert('🎉 გადახდა წარმატებით დასრულდა! შეკვეთა მიღებულია.');
         cart = [];
         saveCart();
         updateCartBadge();
-        cardInput.value = ''; // ვასუფთავებთ ინპუტს
+        cardInput.value = '';
         navigateTo('');
     }, 2000);
 }
 
-// Live Card Input Mask / გამოტოვებები ყოველ 4 ციფრში
-document.getElementById('cardNumber').addEventListener('input', function (e) {
-    e.target.value = e.target.value.replace(/[^\d]/g, '').replace(/(.{4})/g, '$1 ').trim();
-});
+// უსაფრთხო Live Card Input Mask
+function initCardMask() {
+    document.addEventListener('input', function (e) {
+        if (e.target && e.target.id === 'cardNumber') {
+            e.target.value = e.target.value.replace(/[^\d]/g, '').replace(/(.{4})/g, '$1 ').trim();
+        }
+    });
+}
   
