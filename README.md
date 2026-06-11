@@ -1,1 +1,1 @@
-[link](file:///C:/Users/User/Desktop/TechShop/index.html)
+(file:///C:/Users/User/Desktop/TechShop/index.html)
