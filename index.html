@@ -73,7 +73,7 @@
                 <div class="absolute right-0 bottom-0 text-[160px] md:text-[200px] opacity-20 select-none pointer-events-none transform translate-x-10 translate-y-10 group-hover:scale-110 transition-transform duration-500">⚡</div>
                 <div class="relative z-10 max-w-md">
                     <span class="bg-amber-500 text-slate-950 text-[10px] font-extrabold uppercase px-2.5 py-1 rounded-md tracking-wider">სუპერ შეთავაზება</span>
-                    <h1 class="text-3xl md:text-4xl font-black text-white tracking-tight mt-4 mb-3 leading-tight">გრანდიოზული ფასდაკლება ციფრულ ტექნიკაზე!</h1>
+                    <h1 class="text-3xl md:text-4xl font-black text-white tracking-tight mt-4 mb-3 leading-tight"> ფასდაკლება ციფრულ ტექნიკაზე!</h1>
                     <p class="text-slate-300 text-sm md:text-base font-medium mb-6">მიიღე საუკეთესო ფასები, უფასო მიწოდება მთელ საქართველოში და ონლაინ განვადება 0%-დან.</p>
                 </div>
                 <div class="relative z-10">
@@ -122,7 +122,7 @@
                     <ul id="brandFilters" class="space-y-2 text-sm font-medium text-slate-600"></ul>
                 </div>
                 <div>
-                    <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3">ფასის ფილტრი ($)</h4>
+                    <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3">ფასის ფილტრი (ლ)</h4>
                     <div class="flex items-center gap-2">
                         <input type="number" id="priceMin" placeholder="Min" oninput="filterProducts()" class="w-full p-2 bg-slate-50 border border-slate-200 rounded-lg text-sm outline-none">
                         <span class="text-slate-400">-</span>
@@ -152,7 +152,7 @@
     <div id="authView" class="view-section hidden p-4 md:p-12 max-w-md mx-auto w-full flex-grow flex items-center justify-center">
         <div class="bg-white border border-slate-200 rounded-3xl p-8 shadow-sm w-full">
             <h2 id="authTitle" class="text-2xl font-black text-slate-900 mb-2">სისტემაში შესვლა</h2>
-            <p id="authSubtitle" class="text-sm font-medium text-slate-400 mb-6">მიიღე წვდომა პრემიუმ ფუნქციებზე.</p>
+            <p id="authSubtitle" class="text-sm font-medium text-slate-400 mb-6">მიიღე წვდომა.</p>
             <form id="authForm" onsubmit="handleAuthSubmit(event)" class="space-y-4">
                 <div class="flex flex-col gap-1">
                     <label class="text-xs font-bold uppercase text-slate-400">ელ-ფოსტა</label>
@@ -180,12 +180,12 @@
     <div id="aboutView" class="view-section hidden p-4 md:p-12 max-w-4xl mx-auto w-full flex-grow">
         <div class="bg-white border border-slate-200 rounded-3xl p-8 md:p-12 shadow-sm">
             <span class="text-xs font-extrabold uppercase tracking-widest text-amber-500">TechShop Electronics</span>
-            <h2 class="text-3xl font-black tracking-tight text-slate-900 mt-2 mb-6">ინოვაციური ონლაინ პლატფორმა</h2>
+            <h2 class="text-3xl font-black tracking-tight text-slate-900 mt-2 mb-6">ონლაინ პლატფორმა</h2>
             <div class="space-y-6 text-slate-600 leading-relaxed font-medium">
                 <p>**TechShop** წარმოადგენს თანამედროვე, სრულად ავტომატიზებულ ელექტრონული კომერციის პლატფორმას, რომელიც მომხმარებელს სთავაზობს პრემიუმ კლასის ციფრულ ტექნიკას, სმარტფონებსა და აქსესუარებს საუკეთესო პირობებით.</p>
                 <p class="text-emerald-600 bg-emerald-50 border border-emerald-200 p-4 rounded-xl font-bold">🚚 მნიშვნელოვანი შეტყობინება: ჩვენთან მიწოდება არის სრულიად უფასო საქართველოს მასშტაბით (თბილისსა და ნებისმიერ რეგიონში)! შეკვეთილ ნივთს კურიერი პირდაპირ კართან მოგიტანთ ყოველგვარი დამატებითი ხარჯის გარეშე.</p>
                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 pt-6 border-t border-slate-100">
-                    <div class="bg-slate-50 p-4 rounded-2xl"><div class="text-2xl mb-1">📦</div><h4 class="font-bold text-slate-900 text-sm">უფასო მიწოდება</h4><p class="text-xs text-slate-400 mt-1">საქართველოს ნებისმიერ წერტილში 0 ლარად.</p></div>
+                    <div class="bg-slate-50 p-4 rounded-2xl"><div class="text-2xl mb-1">📦</div><h4 class="font-bold text-slate-900 text-sm">მიწოდება საქართველოს მაშტაბით</h4><p class="text-xs text-slate-400 mt-1">საქართველოს ნებისმიერ წერტილში 0 ლარად.</p></div>
                     <div class="bg-slate-50 p-4 rounded-2xl"><div class="text-2xl mb-1">🏦</div><h4 class="font-bold text-slate-900 text-sm">ონლაინ განვადება</h4><p class="text-xs text-slate-400 mt-1">BOG, TBC და Credo ბანკების მხარდაჭერა.</p></div>
                     <div class="bg-slate-50 p-4 rounded-2xl"><div class="text-2xl mb-1">🛡️</div><h4 class="font-bold text-slate-900 text-sm">ოფიციალური გარანტია</h4><p class="text-xs text-slate-400 mt-1">მინიმუმ 1 წლიანი სერვის-გარანტია.</p></div>
                 </div>
@@ -362,7 +362,7 @@
             </div>
             <div>
                 <h4 class="text-sm font-black uppercase text-slate-900 mb-3 tracking-wider">სერვისები</h4>
-                <p class="text-xs text-slate-500 font-medium leading-relaxed">🚚 მიწოდება: <span class="text-emerald-600 font-bold">უფასო (საქართველოს მასშტაბით)</span></p>
+                <p class="text-xs text-slate-500 font-medium leading-relaxed">🚚 მიწოდება: <span class="text-emerald-600 font-bold">(საქართველოს მასშტაბით)</span></p>
                 <p class="text-xs text-slate-500 font-medium leading-relaxed mt-1">🏦 განვადება: საქართველოს ბანკი, თიბისი, კრედო</p>
             </div>
         </div>
