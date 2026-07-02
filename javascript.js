@@ -1,74 +1,97 @@
 // პროდუქტების მონაცემთა ბაზა (ka = ქართული, en = ინგლისური)
 const products = [
-    {id: 1, cat: 'Audio', price: 549, emoji: '🎧', stars: 5, reviews: 2341, badge: 'Hot',
+    {id: 1, cat: 'Audio', price: 549, emoji: '🎧', stars: 5, reviews: 2341, badge: 'Hot', weight: 0.5, width: 20, height: 20, depth: 10,
         name: { ka: 'AirPods Pro Max - Space Gray', en: 'AirPods Pro Max - Space Gray' },
         desc: { ka: 'უმაღლესი ხარისხის აუდიო სისტემა აქტიური ხმაურის დახშობის (ANC) ტექნოლოგიით.', en: 'Premium audio system with Active Noise Cancellation (ANC) technology.' },
         specs: { ka: { 'ბრენდი': 'Apple', 'მოდელი': 'AirPods Pro Max', 'ელემენტი': '20 საათი' }, en: { 'Brand': 'Apple', 'Model': 'AirPods Pro Max', 'Battery': '20 hours' } }},
-    {id: 2, cat: 'Phones', price: 1199, emoji: '📱', stars: 5, reviews: 1820, badge: 'New',
+    {id: 2, cat: 'Phones', price: 1199, emoji: '📱', stars: 5, reviews: 1820, badge: 'New', weight: 0.3, width: 17, height: 9, depth: 1,
         name: { ka: 'Galaxy S25 Ultra 512GB', en: 'Galaxy S25 Ultra 512GB' },
         desc: { ka: 'ინოვაციური სმარტფონი 200MP კამერით და ჩაშენებული S Pen-ით.', en: 'Innovative smartphone with a 200MP camera and built-in S Pen.' },
         specs: { ka: { 'ბრენდი': 'Samsung', 'ეკრანი': '6.8" Dynamic AMOLED' }, en: { 'Brand': 'Samsung', 'Screen': '6.8" Dynamic AMOLED' } }},
-    {id: 3, cat: 'Laptops', price: 1299, emoji: '💻', stars: 5, reviews: 987, badge: 'New',
+    {id: 3, cat: 'Laptops', price: 1299, emoji: '💻', stars: 5, reviews: 987, badge: 'New', weight: 1.5, width: 35, height: 25, depth: 2,
         name: { ka: 'MacBook Air M4 - Titanium', en: 'MacBook Air M4 - Titanium' },
         desc: { ka: 'ულტრა თხელი და მძლავრი ლეპტოპი Apple M4 ჩიპით.', en: 'Ultra-thin and powerful laptop with the Apple M4 chip.' },
         specs: { ka: { 'ბრენდი': 'Apple', 'ჩიპსეტი': 'Apple M4' }, en: { 'Brand': 'Apple', 'Chipset': 'Apple M4' } }},
-    {id: 4, cat: 'Wearables', price: 799, emoji: '⌚', stars: 4, reviews: 654, badge: '',
+    {id: 4, cat: 'Wearables', price: 799, emoji: '⌚', stars: 4, reviews: 654, badge: '', weight: 0.15, width: 10, height: 10, depth: 8,
         name: { ka: 'Apple Watch Ultra 3', en: 'Apple Watch Ultra 3' },
         desc: { ka: 'ყველაზე გამძლე ჭკვიანი საათი ტიტანის კორპუსით.', en: 'The most durable smartwatch with a titanium case.' },
         specs: { ka: { 'ბრენდი': 'Apple', 'კორპუსი': 'ტიტანი' }, en: { 'Brand': 'Apple', 'Case': 'Titanium' } }},
-    {id: 5, cat: 'Cameras', price: 3499, emoji: '📷', stars: 5, reviews: 412, badge: 'Pro',
+    {id: 5, cat: 'Cameras', price: 3499, emoji: '📷', stars: 5, reviews: 412, badge: 'Pro', weight: 2, width: 15, height: 11, depth: 10,
         name: { ka: 'Sony A7 V Mirrorless Camera', en: 'Sony A7 V Mirrorless Camera' },
         desc: { ka: 'პროფესიონალური სრული კადრის უსარკო კამერა.', en: 'Professional full-frame mirrorless camera.' },
         specs: { ka: { 'ბრენდი': 'Sony', 'სენსორი': '61 MP Full-Frame' }, en: { 'Brand': 'Sony', 'Sensor': '61 MP Full-Frame' } }},
-    {id: 6, cat: 'Audio', price: 329, emoji: '🎵', stars: 4, reviews: 1123, badge: 'Sale',
+    {id: 6, cat: 'Audio', price: 329, emoji: '🎵', stars: 4, reviews: 1123, badge: 'Sale', weight: 0.6, width: 20, height: 18, depth: 9,
         name: { ka: 'Bose QuietComfort Ultra', en: 'Bose QuietComfort Ultra' },
         desc: { ka: 'მსოფლიო დონის ხმაურის დახშობა და იმერსიული აუდიო ფორმატი.', en: 'World-class noise cancellation and immersive audio format.' },
         specs: { ka: { 'ბრენდი': 'Bose', 'ტიპი': 'Over-Ear' }, en: { 'Brand': 'Bose', 'Type': 'Over-Ear' } }},
-    {id: 7, cat: 'Audio', price: 179, emoji: '🎧', stars: 5, reviews: 410, badge: 'Sale',
+    {id: 7, cat: 'Audio', price: 179, emoji: '🎧', stars: 5, reviews: 410, badge: 'Sale', weight: 0.1, width: 6, height: 6, depth: 3,
         name: { ka: 'Samsung Galaxy Buds 3 Pro', en: 'Samsung Galaxy Buds 3 Pro' },
         desc: { ka: 'ინტელექტუალური ხმის დახშობა.', en: 'Intelligent active noise cancellation.' },
         specs: { ka: { 'ბრენდი': 'Samsung' }, en: { 'Brand': 'Samsung' } }},
-    {id: 8, cat: 'Phones', price: 899, emoji: '📱', stars: 5, reviews: 1205, badge: 'Sale',
+    {id: 8, cat: 'Phones', price: 899, emoji: '📱', stars: 5, reviews: 1205, badge: 'Sale', weight: 0.25, width: 16, height: 8, depth: 1,
         name: { ka: 'iPhone 15 Pro 256GB', en: 'iPhone 15 Pro 256GB' },
         desc: { ka: 'ტიტანის ერგონომიული დიზაინი.', en: 'Ergonomic titanium design.' },
         specs: { ka: { 'ბრენდი': 'Apple' }, en: { 'Brand': 'Apple' } }},
-    {id: 9, cat: 'Laptops', price: 1450, emoji: '💻', stars: 5, reviews: 312, badge: 'Sale',
+    {id: 9, cat: 'Laptops', price: 1450, emoji: '💻', stars: 5, reviews: 312, badge: 'Sale', weight: 1.8, width: 32, height: 23, depth: 2,
         name: { ka: 'Asus ROG Zephyrus G14', en: 'Asus ROG Zephyrus G14' },
         desc: { ka: 'უმაღლესი დონის გეიმერული ნოუთბუქი.', en: 'Top-tier gaming laptop.' },
         specs: { ka: { 'ბრენდი': 'Asus' }, en: { 'Brand': 'Asus' } }},
-    {id: 10, cat: 'Wearables', price: 299, emoji: '⌚', stars: 4, reviews: 189, badge: 'Sale',
+    {id: 10, cat: 'Wearables', price: 299, emoji: '⌚', stars: 4, reviews: 189, badge: 'Sale', weight: 0.15, width: 9, height: 9, depth: 8,
         name: { ka: 'Google Pixel Watch 3', en: 'Google Pixel Watch 3' },
         desc: { ka: 'Android-ის საუკეთესო ჭკვიანი საათი.', en: "The best smartwatch for Android." },
         specs: { ka: { 'ბრენდი': 'Google' }, en: { 'Brand': 'Google' } }},
-    {id: 11, cat: 'Cameras', price: 1599, emoji: '📷', stars: 5, reviews: 245, badge: 'Sale',
+    {id: 11, cat: 'Cameras', price: 1599, emoji: '📷', stars: 5, reviews: 245, badge: 'Sale', weight: 1.2, width: 14, height: 11, depth: 9,
         name: { ka: 'Fujifilm X-T5 Mirrorless', en: 'Fujifilm X-T5 Mirrorless' },
         desc: { ka: 'რეტრო დიზაინის მქონე პროფესიონალური ფოტოაპარატი.', en: 'Professional camera with a retro-inspired design.' },
         specs: { ka: { 'ბრენდი': 'Fujifilm' }, en: { 'Brand': 'Fujifilm' } }},
-    {id: 12, cat: 'Audio', price: 149, emoji: '🔊', stars: 5, reviews: 856, badge: 'Sale',
+    {id: 12, cat: 'Audio', price: 149, emoji: '🔊', stars: 5, reviews: 856, badge: 'Sale', weight: 1, width: 22, height: 10, depth: 10,
         name: { ka: 'JBL Charge 5 Wi-Fi', en: 'JBL Charge 5 Wi-Fi' },
         desc: { ka: 'წყალგამძლე პორტატული დინამიკი.', en: 'Waterproof portable speaker.' },
         specs: { ka: { 'ბრენდი': 'JBL' }, en: { 'Brand': 'JBL' } }},
-    {id: 13, cat: 'Phones', price: 699, emoji: '📱', stars: 4, reviews: 540, badge: 'Sale',
+    {id: 13, cat: 'Phones', price: 699, emoji: '📱', stars: 4, reviews: 540, badge: 'Sale', weight: 0.25, width: 16, height: 8, depth: 1,
         name: { ka: 'OnePlus 12 5G 256GB', en: 'OnePlus 12 5G 256GB' },
         desc: { ka: 'ულტრა სწრაფი დამუხტვა.', en: 'Ultra-fast charging.' },
         specs: { ka: { 'ბრენდი': 'OnePlus' }, en: { 'Brand': 'OnePlus' } }},
-    {id: 14, cat: 'Laptops', price: 1099, emoji: '💻', stars: 5, reviews: 422, badge: 'Sale',
+    {id: 14, cat: 'Laptops', price: 1099, emoji: '💻', stars: 5, reviews: 422, badge: 'Sale', weight: 1.3, width: 30, height: 21, depth: 2,
         name: { ka: 'Dell XPS 13 OLED', en: 'Dell XPS 13 OLED' },
         desc: { ka: 'პრემიუმ კლასის ულტრაბუქი.', en: 'Premium-class ultrabook.' },
         specs: { ka: { 'ბრენდი': 'Dell' }, en: { 'Brand': 'Dell' } }},
-    {id: 15, cat: 'Wearables', price: 119, emoji: '⌚', stars: 4, reviews: 310, badge: 'Sale',
+    {id: 15, cat: 'Wearables', price: 119, emoji: '⌚', stars: 4, reviews: 310, badge: 'Sale', weight: 0.1, width: 9, height: 9, depth: 8,
         name: { ka: 'Xiaomi Watch S3', en: 'Xiaomi Watch S3' },
         desc: { ka: 'ელეგანტური საათი დიდი ელემენტით.', en: 'Elegant watch with a long-lasting battery.' },
         specs: { ka: { 'ბრენდი': 'Xiaomi' }, en: { 'Brand': 'Xiaomi' } }},
-    {id: 16, cat: 'Audio', price: 289, emoji: '🎧', stars: 5, reviews: 3412, badge: 'Sale',
+    {id: 16, cat: 'Audio', price: 289, emoji: '🎧', stars: 5, reviews: 3412, badge: 'Sale', weight: 0.5, width: 20, height: 18, depth: 9,
         name: { ka: 'Sony WH-1000XM5', en: 'Sony WH-1000XM5' },
         desc: { ka: 'ბაზრის ლიდერი ხმაურის დახშობაში.', en: 'Market leader in noise cancellation.' },
         specs: { ka: { 'ბრენდი': 'Sony' }, en: { 'Brand': 'Sony' } }},
-    {id: 17, cat: 'Phones', price: 799, emoji: '📱', stars: 5, reviews: 745, badge: 'Sale',
+    {id: 17, cat: 'Phones', price: 799, emoji: '📱', stars: 5, reviews: 745, badge: 'Sale', weight: 0.25, width: 16, height: 8, depth: 1,
         name: { ka: 'Samsung Galaxy S24+', en: 'Samsung Galaxy S24+' },
         desc: { ka: 'ბრწყინვალე ეკრანი და გაუმჯობესებული AI.', en: 'Brilliant display with enhanced AI features.' },
         specs: { ka: { 'ბრენდი': 'Samsung' }, en: { 'Brand': 'Samsung' } }}
 ];
+
+// კატეგორიების ჯგუფები (ტოპ მენიუსთვის): წვრილი/მსხვილი ტექნიკა, ციფრული, IT
+const categoryGroups = {
+    small:   { cats: ['Audio', 'Wearables'] },
+    large:   { cats: ['Appliances'] },
+    digital: { cats: ['Phones', 'Cameras'] },
+    it:      { cats: ['Laptops'] }
+};
+
+// პროდუქტის მიწოდების წონის გამოთვლა: რეალური წონა ან მოცულობითი წონა (სიგანე x სიმაღლე x სიღრმე / 6000), რომელიც მეტია
+function getItemDeliveryWeight(p) {
+    const volumetric = ((p.width || 0) * (p.height || 0) * (p.depth || 0)) / 6000;
+    return Math.max(p.weight || 0, volumetric);
+}
+
+const DELIVERY_RATE_PER_KG = 2; // ₾ თითო კილოგრამზე
+const DELIVERY_MIN_FEE = 5; // მინიმალური მიწოდების ღირებულება ₾
+
+function calcCartDeliveryCost() {
+    if (!cart.length) return 0;
+    const totalWeight = cart.reduce((sum, i) => sum + getItemDeliveryWeight(i) * i.qty, 0);
+    return Math.max(DELIVERY_MIN_FEE, Math.round(totalWeight * DELIVERY_RATE_PER_KG));
+}
 
 function pName(p) { return p.name[currentLang] || p.name.ka; }
 function pDesc(p) { return p.desc[currentLang] || p.desc.ka; }
@@ -84,14 +107,15 @@ const translations = {
         recentlyViewed: "ბოლოს ნანახი პროდუქტები", chatHeader: "მეგი — ონლაინ მხარდაჭერა", chatWelcome: "გამარჯობა! მე ვარ მეგი, თქვენი ასისტენტი. რით შემიძლია დაგეხმაროთ?",
         chatInputPlaceholder: "ჩაწერეთ შეტყობინება...", chatAiReply: "გმადლობთ კავშირისთვის! ჩვენი სმარტ AI ასისტენტი ან ოპერატორი მეგი მალე გიპასუხებთ დეტალურად.",
         noProductsFound: "პროდუქტი ვერ მოიძებნა.",
-        navHome: "მთავარი", navDiscounts: "% ფასდაკლებები", navAbout: "ჩვენ შესახებ", navCart: "კალათა",
-        navLoginLabel: "შესვლა", logoutWord: "გამოსვლა",
+        navHome: "მთავარი", navDiscounts: "% ფასდაკლებები", navAbout: "ჩვენ შესახებ", navCart: "🛒 კალათა",
+        navLoginBtn: "🔑 შესვლა", navCategoriesMenu: "კატეგორიები",
+        groupSmall: "წვრილი ტექნიკა", groupLarge: "მსხვილი ტექნიკა", groupDigital: "ციფრული ტექნიკა", groupIT: "IT და კომპიუტერები",
         bannerBadge: "სუპერ შეთავაზება", bannerTitle: "გრანდიოზული ფასდაკლება ციფრულ ტექნიკაზე!",
-        bannerText: "მიიღე საუკეთესო ფასები, უფასო მიწოდება მთელ საქართველოში და ონლაინ განვადება 0%-დან.",
+        bannerText: "მიიღე საუკეთესო ფასები, სწრაფი მიწოდება მთელ საქართველოში (ღირებულება დამოკიდებულია წონაზე) და ონლაინ განვადება 0%-დან.",
         bannerCta: "იხილეთ ფასდაკლებები",
         promoAudioTitle: "Premium Audio", promoAudioText: "საუკეთესო ჟღერადობა ყოველდღიურობისთვის.", promoAudioLink: "ნახვა →",
         promoLaptopTitle: "Smart Laptops", promoLaptopText: "აკონტროლე შენი სამუშაო პროცესი მძლავრად.", promoLaptopLink: "აღმოაჩინე →",
-        filterCategories: "კატეგორიები", filterBrands: "ბრენდები", filterPrice: "ფასის ფილტრი ($)",
+        filterCategories: "კატეგორიები", filterBrands: "ბრენდები", filterPrice: "ფასის ფილტრი (₾)", filterDiscountOnly: "მხოლოდ ფასდაკლებული",
         discountsTitle: "🔥 ცხელი ფასდაკლებები", discountsSubtitle: "მხოლოდ აქცია/Sale სტატუსის მქონე ექსკლუზიური შეთავაზებები.",
         backToCatalogArrow: "← კატალოგში დაბრუნება",
         authTitleLogin: "სისტემაში შესვლა", authTitleRegister: "რეგისტრაცია",
@@ -101,18 +125,19 @@ const translations = {
         authToggleToRegister: "არ გაქვს ანგარიში? დარეგისტრირდი", authToggleToLogin: "უკვე გაქვს ანგარიში? შესვლა",
         aboutKicker: "TechShop Electronics", aboutTitle: "ინოვაციური ონლაინ პლატფორმა",
         aboutP1: "**TechShop** წარმოადგენს თანამედროვე, სრულად ავტომატიზებულ ელექტრონული კომერციის პლატფორმას, რომელიც მომხმარებელს სთავაზობს პრემიუმ კლასის ციფრულ ტექნიკას, სმარტფონებსა და აქსესუარებს საუკეთესო პირობებით.",
-        aboutNotice: "🚚 მნიშვნელოვანი შეტყობინება: ჩვენთან მიწოდება არის სრულიად უფასო საქართველოს მასშტაბით (თბილისსა და ნებისმიერ რეგიონში)! შეკვეთილ ნივთს კურიერი პირდაპირ კართან მოგიტანთ ყოველგვარი დამატებითი ხარჯის გარეშე.",
-        aboutFeature1Title: "უფასო მიწოდება", aboutFeature1Text: "საქართველოს ნებისმიერ წერტილში 0 ლარად.",
+        aboutNotice: "🚚 მნიშვნელოვანი შეტყობინება: ჩვენთან მიწოდება ხდება საქართველოს მასშტაბით (თბილისსა და ნებისმიერ რეგიონში), ღირებულება გამოითვლება ნივთის წონის მიხედვით და აისახება კალათაში შეკვეთის გაფორმებისას.",
+        aboutFeature1Title: "მიწოდება წონის მიხედვით", aboutFeature1Text: "ღირებულება დამოკიდებულია ნივთის წონასა და მოცულობაზე.",
         aboutFeature2Title: "ონლაინ განვადება", aboutFeature2Text: "BOG, TBC და Credo ბანკების მხარდაჭერა.",
         aboutFeature3Title: "ოფიციალური გარანტია", aboutFeature3Text: "მინიმუმ 1 წლიანი სერვის-გარანტია.",
         checkoutTitle: "შეკვეთის გაფორმება", checkoutStep1: "1. კალათის პროდუქტები",
-        checkoutStep2: "2. მიწოდების ინფორმაცია (მიწოდება უფასოა)", checkoutStep3: "3. გადახდის ან განვადების მეთოდი",
-        formFirstName: "სახელი", formLastName: "გვარი", formAddress: "სრული მისამართი (მაგ: ბათუმი, რუსთაველის 5)",
+        checkoutStep2: "2. მიწოდების ინფორმაცია", checkoutStep3: "3. გადახდის ან განვადების მეთოდი",
+        formFirstName: "სახელი", formLastName: "გვარი", formPhone: "ტელეფონის ნომერი", formAddress: "სრული მისამართი (მაგ: ბათუმი, რუსთაველის 5)",
         tabCard: "💳 საბანკო ბარათი", tabInstallment: "🏦 ონლაინ განვადება", cardNumberLabel: "ბარათის ნომერი",
         chooseBankText: "აირჩიეთ სასურველი ბანკი განვადების მისაღებად:",
         bankBOG: "BOG განვადება", bankTBC: "TBC განვადება", bankCredo: "CREDO განვადება",
         orderSummary: "შეკვეთის რეზიუმე", summaryProducts: "პროდუქტები:", summaryDelivery: "მიწოდება:",
         summaryDeliveryFree: "უფასო (საქართველო)", summaryTotalLabel: "სულ:",
+        footerDeliveryText: "ღირებულება წონის მიხედვით (საქართველოს მასშტაბით)",
         placeOrderBtn: "შეკვეთის განთავსება", requestInstallmentBtn: "განვადების მოთხოვნა",
         footerAbout: "პრემიუმ კლასის ონლაინ მარკეტპლეისი. მიიღეთ საუკეთესო ხარისხი, სწრაფი მომსახურება და გარანტირებული კმაყოფილება.",
         footerCustomerTitle: "მომხმარებლისთვის", footerTerms: "📄 წესები და პირობები", footerWarranty: "🛡️ საგარანტიო პირობები",
@@ -122,12 +147,14 @@ const translations = {
         toastAddedToCart: (name) => `✅ ${name} დაემატა კალათაში!`,
         toastEmptyCart: "⚠️ კალათა ცარიელია!", toastCardInvalid: "⚠️ გთხოვთ, შეიყვანოთ ბარათის ნომერი სწორად.",
         toastSelectBank: "⚠️ გთხოვთ, აირჩიოთ რომელიმე ბანკი განვადებისთვის.",
+        toastFillRequired: "⚠️ გთხოვთ, შეავსოთ სახელი, გვარი, ტელეფონი და მისამართი.",
         toastProcessing: "🔄 ტრანზაქცია მუშავდება...",
         toastRedirecting: (bank) => `🔄 გადამისამართება ${bank}-ის ონლაინ განვადებაზე...`,
-        alertPaymentSuccess: "🎉 გადახდა წარმატებით დასრულდა! მიწოდება უფასოა.",
+        alertPaymentSuccess: "🎉 გადახდა წარმატებით დასრულდა! მადლობთ შეკვეთისთვის.",
         alertInstallmentSuccess: "🎉 განვადების მოთხოვნა წარმატებით გაიგზავნა ბანკში!",
         toastLoginSuccess: "🔒 ავტორიზაცია წარმატებულია!", toastGoogleSuccess: "🌐 Google ავტორიზაცია წარმატებულია!",
-        toastLogout: "🚪 გამოხვედით სისტემიდან."
+        toastLogout: "🚪 გამოხვედით სისტემიდან.",
+        userMenuLabel: (name) => `👤 ${name} (გამოსვლა)`
     },
     en: {
         buy: "Buy Now", addToCart: "Add to Cart", total: "Total", subtotal: "Subtotal",
@@ -136,14 +163,15 @@ const translations = {
         recentlyViewed: "Recently Viewed Products", chatHeader: "Megi — Live Support", chatWelcome: "Hello! I am Megi, your live assistant. How can I help you today?",
         chatInputPlaceholder: "Type a message...", chatAiReply: "Thank you for reaching out! Our smart AI assistant or Megi will reply to you shortly.",
         noProductsFound: "No products found.",
-        navHome: "Home", navDiscounts: "% Discounts", navAbout: "About Us", navCart: "Cart",
-        navLoginLabel: "Log In", logoutWord: "Log Out",
+        navHome: "Home", navDiscounts: "% Discounts", navAbout: "About Us", navCart: "🛒 Cart",
+        navLoginBtn: "🔑 Log In", navCategoriesMenu: "Categories",
+        groupSmall: "Small Appliances", groupLarge: "Large Appliances", groupDigital: "Digital Devices", groupIT: "IT & Computers",
         bannerBadge: "Super Deal", bannerTitle: "Huge discounts on the latest tech!",
-        bannerText: "Get the best prices, free delivery across Georgia, and online installments from 0%.",
+        bannerText: "Get the best prices, fast delivery across Georgia (cost depends on weight), and online installments from 0%.",
         bannerCta: "View Discounts",
         promoAudioTitle: "Premium Audio", promoAudioText: "The best sound for everyday life.", promoAudioLink: "View →",
         promoLaptopTitle: "Smart Laptops", promoLaptopText: "Power through your workflow with ease.", promoLaptopLink: "Discover →",
-        filterCategories: "Categories", filterBrands: "Brands", filterPrice: "Price Filter ($)",
+        filterCategories: "Categories", filterBrands: "Brands", filterPrice: "Price Filter (₾)", filterDiscountOnly: "Discounted only",
         discountsTitle: "🔥 Hot Discounts", discountsSubtitle: "Exclusive offers with an active Sale status only.",
         backToCatalogArrow: "← Back to Catalog",
         authTitleLogin: "Sign In", authTitleRegister: "Create Account",
@@ -153,18 +181,19 @@ const translations = {
         authToggleToRegister: "Don't have an account? Sign up", authToggleToLogin: "Already have an account? Sign in",
         aboutKicker: "TechShop Electronics", aboutTitle: "An Innovative Online Platform",
         aboutP1: "**TechShop** is a modern, fully automated e-commerce platform that offers customers premium-class digital devices, smartphones, and accessories on the best terms.",
-        aboutNotice: "🚚 Important notice: delivery with us is completely free across all of Georgia (Tbilisi and any region)! A courier will bring your order straight to your door at no extra cost.",
-        aboutFeature1Title: "Free Delivery", aboutFeature1Text: "Anywhere in Georgia for 0 GEL.",
+        aboutNotice: "🚚 Important notice: delivery is available across all of Georgia (Tbilisi and any region). The cost is calculated based on the item's weight and shown at checkout.",
+        aboutFeature1Title: "Weight-Based Delivery", aboutFeature1Text: "Cost depends on the item's weight and volume.",
         aboutFeature2Title: "Online Installments", aboutFeature2Text: "Supported by BOG, TBC, and Credo banks.",
         aboutFeature3Title: "Official Warranty", aboutFeature3Text: "At least 1 year of service warranty.",
         checkoutTitle: "Checkout", checkoutStep1: "1. Items in Cart",
-        checkoutStep2: "2. Delivery Information (delivery is free)", checkoutStep3: "3. Payment or Installment Method",
-        formFirstName: "First Name", formLastName: "Last Name", formAddress: "Full address (e.g. Batumi, Rustaveli St. 5)",
+        checkoutStep2: "2. Delivery Information", checkoutStep3: "3. Payment or Installment Method",
+        formFirstName: "First Name", formLastName: "Last Name", formPhone: "Phone Number", formAddress: "Full address (e.g. Batumi, Rustaveli St. 5)",
         tabCard: "💳 Bank Card", tabInstallment: "🏦 Online Installments", cardNumberLabel: "Card Number",
         chooseBankText: "Choose a bank to apply for installments:",
         bankBOG: "BOG Installments", bankTBC: "TBC Installments", bankCredo: "CREDO Installments",
         orderSummary: "Order Summary", summaryProducts: "Products:", summaryDelivery: "Delivery:",
         summaryDeliveryFree: "Free (Georgia)", summaryTotalLabel: "Total:",
+        footerDeliveryText: "Cost based on weight (across Georgia)",
         placeOrderBtn: "Place Order", requestInstallmentBtn: "Request Installment",
         footerAbout: "A premium-class online marketplace. Get the best quality, fast service, and guaranteed satisfaction.",
         footerCustomerTitle: "For Customers", footerTerms: "📄 Terms & Conditions", footerWarranty: "🛡️ Warranty Terms",
@@ -174,12 +203,14 @@ const translations = {
         toastAddedToCart: (name) => `✅ ${name} added to cart!`,
         toastEmptyCart: "⚠️ Your cart is empty!", toastCardInvalid: "⚠️ Please enter a valid card number.",
         toastSelectBank: "⚠️ Please select a bank for installments.",
+        toastFillRequired: "⚠️ Please fill in your first name, last name, phone, and address.",
         toastProcessing: "🔄 Processing transaction...",
         toastRedirecting: (bank) => `🔄 Redirecting to ${bank} online installments...`,
-        alertPaymentSuccess: "🎉 Payment completed successfully! Delivery is free.",
+        alertPaymentSuccess: "🎉 Payment completed successfully! Thank you for your order.",
         alertInstallmentSuccess: "🎉 Installment request was successfully sent to the bank!",
         toastLoginSuccess: "🔒 Signed in successfully!", toastGoogleSuccess: "🌐 Google sign-in successful!",
-        toastLogout: "🚪 You have been logged out."
+        toastLogout: "🚪 You have been logged out.",
+        userMenuLabel: (name) => `👤 ${name} (Log Out)`
     }
 };
 
@@ -209,7 +240,9 @@ const policyData = {
 
 let cart = JSON.parse(localStorage.getItem('techshop_cart')) || [];
 let selectedCategory = 'all';
+let selectedGroup = 'all';
 let selectedBrand = 'all';
+let showDiscountOnly = false;
 let authMode = 'login';
 let paymentMethod = 'card'; 
 let currentUser = JSON.parse(localStorage.getItem('techshop_user')) || null;
@@ -317,6 +350,7 @@ window.changeLanguage = function(lang) {
     initFilters();
     initBrandFilters();
     initPromoMarquee();
+    renderCategoriesMenu();
     filterProducts();
     if (window.location.hash.startsWith('#product/')) {
         renderProductDetail(parseInt(window.location.hash.replace('#product/', '')));
@@ -347,7 +381,7 @@ function initFilters() {
         </li>
     `).join('');
 }
-window.setCategory = function(cat) { selectedCategory = cat; filterProducts(); }
+window.setCategory = function(cat) { selectedCategory = cat; selectedGroup = 'all'; filterProducts(); }
 
 // ბრენდები
 function initBrandFilters() {
@@ -365,19 +399,93 @@ window.setBrand = function(brand) { selectedBrand = brand; filterProducts(); }
 
 window.filterProducts = function() {
     const searchInput = document.getElementById('searchInput');
-    const searchQ = searchInput ? searchInput.value.toLowerCase() : '';
-    const minP = parseFloat(document.getElementById('priceMin').value) || 0;
-    const maxP = parseFloat(document.getElementById('priceMax').value) || Infinity;
+    const searchQ = searchInput ? searchInput.value.toLowerCase().trim() : '';
+    const priceMinEl = document.getElementById('priceMin');
+    const priceMaxEl = document.getElementById('priceMax');
+    const minP = priceMinEl ? (parseFloat(priceMinEl.value) || 0) : 0;
+    const maxP = priceMaxEl ? (parseFloat(priceMaxEl.value) || Infinity) : Infinity;
 
     const filtered = products.filter(p => {
         const matchCat = (selectedCategory === 'all' || p.cat === selectedCategory);
+        const matchGroup = (selectedGroup === 'all') || (categoryGroups[selectedGroup] && categoryGroups[selectedGroup].cats.includes(p.cat));
         const matchBrand = (selectedBrand === 'all' || pBrand(p) === selectedBrand);
-        const matchSearch = pName(p).toLowerCase().includes(searchQ) || pDesc(p).toLowerCase().includes(searchQ);
+        const matchSearch = !searchQ || pName(p).toLowerCase().includes(searchQ) || pDesc(p).toLowerCase().includes(searchQ) || pBrand(p).toLowerCase().includes(searchQ) || p.cat.toLowerCase().includes(searchQ);
         const matchPrice = p.price >= minP && p.price <= maxP;
-        return matchCat && matchBrand && matchSearch && matchPrice;
+        const matchDiscount = !showDiscountOnly || (p.badge === 'Sale' || p.badge === 'Hot');
+        return matchCat && matchGroup && matchBrand && matchSearch && matchPrice && matchDiscount;
     });
     renderCatalog(filtered);
 }
+
+// ძებნის ველიდან ტექსტის აკრეფისას — თუ სხვა გვერდზეა მომხმარებელი, გადავიდეთ კატალოგზე და გავფილტროთ
+window.handleSearchInput = function() {
+    if (window.location.hash && window.location.hash !== '#') {
+        window.location.hash = '';
+    } else {
+        filterProducts();
+    }
+}
+
+// ფასდაკლების ჩექბოქსის გადართვა
+window.toggleDiscountFilter = function() {
+    const cb = document.getElementById('discountOnly');
+    showDiscountOnly = cb ? cb.checked : false;
+    filterProducts();
+}
+
+// ტოპ მენიუს კატეგორიების ჯგუფის არჩევა (წვრილი/მსხვილი/ციფრული/IT ტექნიკა)
+window.setCategoryGroup = function(group) {
+    selectedGroup = group;
+    selectedCategory = 'all';
+    closeCategoriesMenus();
+    if (window.location.hash && window.location.hash !== '#') {
+        window.location.hash = '';
+    }
+    initFilters();
+    filterProducts();
+}
+
+function closeCategoriesMenus() {
+    ['categoriesMenuPanel', 'categoriesMenuPanelMobile'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.classList.add('hidden');
+    });
+}
+
+window.toggleCategoriesMenu = function(panelId) {
+    renderCategoriesMenu();
+    const panel = document.getElementById(panelId);
+    if (!panel) return;
+    const isHidden = panel.classList.contains('hidden');
+    closeCategoriesMenus();
+    if (isHidden) panel.classList.remove('hidden');
+}
+
+// კატეგორიების ჯგუფების მენიუს რენდერი ორივე (დესქტოპ/მობაილ) პანელისთვის
+function renderCategoriesMenu() {
+    const groups = [
+        { key: 'small', emoji: '🔌', label: t('groupSmall') },
+        { key: 'large', emoji: '🧊', label: t('groupLarge') },
+        { key: 'digital', emoji: '📱', label: t('groupDigital') },
+        { key: 'it', emoji: '💻', label: t('groupIT') }
+    ];
+    const html = groups.map(g => `
+        <button type="button" onclick="window.setCategoryGroup('${g.key}')" class="w-full text-left px-4 py-2 text-sm font-semibold hover:bg-slate-50 flex items-center gap-2">
+            <span>${g.emoji}</span><span>${g.label}</span>
+        </button>
+    `).join('');
+    ['categoriesMenuPanel', 'categoriesMenuPanelMobile'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.innerHTML = html;
+    });
+}
+
+document.addEventListener('click', function(e) {
+    const wrap1 = document.getElementById('categoriesMenuPanel');
+    const wrap2 = document.getElementById('categoriesMenuPanelMobile');
+    const clickedInsideMenu = (wrap1 && wrap1.contains(e.target)) || (wrap2 && wrap2.contains(e.target)) || (e.target.closest && e.target.closest('[onclick*="toggleCategoriesMenu"]'));
+    if (!clickedInsideMenu) closeCategoriesMenus();
+});
 
 function initPromoMarquee() {
     const container = document.getElementById('promoMarquee');
@@ -389,7 +497,7 @@ function initPromoMarquee() {
             <span class="text-2xl">${p.emoji}</span>
             <div>
                 <h4 class="text-xs font-black text-rose-600 truncate max-w-[140px]">${pName(p)}</h4>
-                <p class="text-[10px] font-bold text-slate-900">$${p.price}</p>
+                <p class="text-[10px] font-bold text-slate-900">₾${p.price}</p>
             </div>
             <span class="text-[9px] bg-rose-500 text-white px-1.5 py-0.5 font-extrabold rounded uppercase">${p.badge}</span>
         </div>
@@ -432,7 +540,7 @@ function generateCards(list, targetGrid) {
                     <div class="flex items-center gap-1 text-amber-500 text-xs mt-2"><span>${'★'.repeat(p.stars)}${'☆'.repeat(5-p.stars)}</span><span class="text-slate-400 font-semibold ml-1">(${p.reviews})</span></div>
                 </div>
                 <div class="flex items-center justify-between mt-5 gap-2">
-                    <span class="text-base font-black text-slate-900 flex-shrink-0">$${p.price.toLocaleString()}</span>
+                    <span class="text-base font-black text-slate-900 flex-shrink-0">₾${p.price.toLocaleString()}</span>
                     <div class="flex items-center gap-1.5">
                         <button onclick="window.buyNow(${p.id})" class="h-9 px-3 bg-amber-500 hover:bg-amber-600 text-slate-950 rounded-xl text-xs font-bold transition-all shadow-sm">${t('buy')}</button>
                         <button id="btn-add-${p.id}" onclick="window.addToCart(${p.id})" class="h-9 w-9 bg-slate-900 text-white rounded-xl font-bold flex items-center justify-center text-lg transition-all shadow-sm">+</button>
@@ -460,7 +568,7 @@ function renderProductDetail(id) {
             <div>
                 <span class="text-xs font-bold text-amber-500 uppercase">${p.cat}</span>
                 <h1 class="text-3xl font-extrabold text-slate-900 mt-2 mb-3">${pName(p)}</h1>
-                <div class="text-3xl font-black text-slate-900 mb-6">$${p.price.toLocaleString()}</div>
+                <div class="text-3xl font-black text-slate-900 mb-6">₾${p.price.toLocaleString()}</div>
                 <p class="text-slate-600 text-sm mb-8">${pDesc(p)}</p>
                 <table class="w-full mb-8">${specsHTML}</table>
                 <button onclick="window.addToCart(${p.id}); window.navigateTo('cart')" class="w-full md:w-auto px-8 py-4 bg-slate-900 hover:bg-slate-800 text-white font-bold rounded-xl shadow-md transition-all">${t('addToCart')} &amp; ${t('buy')}</button>
@@ -618,10 +726,26 @@ window.switchPaymentTab = function(type) {
     }
 }
 
+// მომხმარებლის მიწოდების მონაცემების (სახელი, გვარი, ტელეფონი, მისამართი) ამოღება ფორმიდან
+function getCheckoutCustomerData() {
+    return {
+        firstName: (document.getElementById('checkoutFirstName')?.value || '').trim(),
+        lastName: (document.getElementById('checkoutLastName')?.value || '').trim(),
+        phone: (document.getElementById('checkoutPhone')?.value || '').trim(),
+        address: (document.getElementById('checkoutAddress')?.value || '').trim()
+    };
+}
+
 // გადახდის / განვადების დამუშავება
 window.processPayment = function() {
     if(!cart.length) {
         showToast(t('toastEmptyCart'));
+        return;
+    }
+
+    const customer = getCheckoutCustomerData();
+    if (!customer.firstName || !customer.lastName || !customer.phone || !customer.address) {
+        showToast(t('toastFillRequired'));
         return;
     }
 
@@ -640,6 +764,20 @@ window.processPayment = function() {
         }
         showToast(t('toastRedirecting')(selectedBank.value));
     }
+
+    // შეკვეთის მონაცემების შენახვა (მომხმარებლის სახელი/გვარი/ტელეფონი/მისამართი + კალათა + მიწოდების ღირებულება)
+    const subtotal = cart.reduce((s, i) => s + (i.price * i.qty), 0);
+    const deliveryCost = calcCartDeliveryCost();
+    const order = {
+        customer,
+        items: cart,
+        subtotal,
+        deliveryCost,
+        total: subtotal + deliveryCost,
+        paymentMethod,
+        createdAt: new Date().toISOString()
+    };
+    localStorage.setItem('techshop_last_order', JSON.stringify(order));
 
     setTimeout(() => {
         alert(paymentMethod === 'card' ? t('alertPaymentSuccess') : t('alertInstallmentSuccess'));
@@ -695,13 +833,8 @@ window.logoutUser = function() {
 function updateAuthUI() {
     const btn = document.getElementById('navAuthBtn');
     if(!btn) return;
-    if(currentUser) {
-        btn.innerHTML = `👤<span class="hidden sm:inline ml-1">${currentUser.name} (${t('logoutWord')})</span>`;
-        btn.onclick = () => logoutUser();
-    } else {
-        btn.innerHTML = `🔑<span class="hidden sm:inline ml-1">${t('navLoginLabel')}</span>`;
-        btn.onclick = () => navigateTo('auth');
-    }
+    if(currentUser) { btn.innerHTML = t('userMenuLabel')(currentUser.name); btn.onclick = () => logoutUser(); }
+    else { btn.innerHTML = t('navLoginBtn'); btn.onclick = () => navigateTo('auth'); }
 }
 
 function saveCart() { localStorage.setItem('techshop_cart', JSON.stringify(cart)); }
@@ -766,7 +899,7 @@ function renderCartPage() {
                     <div class="w-14 h-14 bg-slate-50 rounded-xl flex items-center justify-center text-2xl flex-shrink-0">${item.emoji}</div>
                     <div class="min-w-0 flex-1">
                         <div class="font-bold text-sm text-slate-900 truncate">${pName(item)}</div>
-                        <div class="text-xs font-bold text-amber-600 mt-0.5">$${item.price}</div>
+                        <div class="text-xs font-bold text-amber-600 mt-0.5">₾${item.price}</div>
                     </div>
                 </div>
                 <div class="flex items-center border border-slate-200 rounded-lg bg-slate-50 overflow-hidden flex-shrink-0">
@@ -779,10 +912,14 @@ function renderCartPage() {
     }
 
     const finalPrice = cart.reduce((s, i) => s + (i.price * i.qty), 0);
+    const deliveryCost = calcCartDeliveryCost();
+    const grandTotal = finalPrice + deliveryCost;
     const subtotalEl = document.getElementById('summarySubtotal');
+    const deliveryEl = document.getElementById('summaryDeliveryCost');
     const totalEl = document.getElementById('summaryTotal');
-    if(subtotalEl) subtotalEl.textContent = '$' + finalPrice.toLocaleString();
-    if(totalEl) totalEl.textContent = '$' + finalPrice.toLocaleString();
+    if(subtotalEl) subtotalEl.textContent = '₾' + finalPrice.toLocaleString();
+    if(deliveryEl) deliveryEl.textContent = '₾' + deliveryCost.toLocaleString();
+    if(totalEl) totalEl.textContent = '₾' + grandTotal.toLocaleString();
 }
 
 function showToast(msg) {

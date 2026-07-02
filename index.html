@@ -30,37 +30,47 @@
             </a>
             <div class="hidden lg:flex items-center gap-4 text-sm font-semibold text-slate-600">
                 <a href="#" data-i18n="navHome" class="hover:text-slate-900 transition-colors">მთავარი</a>
+                <div class="relative">
+                    <button type="button" onclick="window.toggleCategoriesMenu('categoriesMenuPanel')" data-i18n="navCategoriesMenu" class="hover:text-slate-900 transition-colors flex items-center gap-1">
+                        კატეგორიები <span class="text-[9px] mt-0.5">▾</span>
+                    </button>
+                    <div id="categoriesMenuPanel" class="hidden absolute left-0 top-full mt-2 bg-white border border-slate-200 rounded-xl shadow-lg py-2 w-60 z-50 text-slate-600"></div>
+                </div>
                 <a href="#discounts" data-i18n="navDiscounts" class="hover:text-slate-900 transition-colors flex items-center gap-1 text-rose-600">% ფასდაკლებები</a>
                 <a href="#about" data-i18n="navAbout" class="hover:text-slate-900 transition-colors">ჩვენ შესახებ</a>
             </div>
         </div>
         
-        <div class="flex items-center gap-1.5 sm:gap-4 w-full max-w-2xl justify-end">
+        <div class="flex items-center gap-3 sm:gap-4 w-full max-w-2xl justify-end">
             <!-- 1. საძიებო ველი -->
             <div class="relative w-full max-w-xs hidden sm:block">
                 <div class="absolute inset-y-0 left-3 flex items-center pointer-events-none text-slate-400">
                     <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
                 </div>
-                <input type="text" placeholder="მოძებნე სასურველი პროდუქტი..." id="searchInput" oninput="filterProducts()" 
+                <input type="text" placeholder="მოძებნე სასურველი პროდუქტი..." id="searchInput" oninput="window.handleSearchInput()" 
                        class="w-full pl-10 pr-4 py-2 bg-slate-100 border border-transparent rounded-xl text-sm focus:bg-white focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20 outline-none transition-all">
             </div>
 
-            <!-- 2. 🌐 ენის გადამრთველი კონტეინერი (ყოველთვის ხილული, არასდროს იკუმშება) -->
+            <!-- 2. 🌐 ენის გადამრთველი კონტეინერი -->
             <div id="langSelectorContainer" class="flex gap-1 bg-slate-100 p-1 rounded-xl h-9 items-center border border-slate-200/40 shrink-0"></div>
             
-            <button onclick="navigateTo('auth')" id="navAuthBtn" class="flex items-center justify-center text-sm font-bold text-slate-700 hover:text-slate-900 bg-slate-100 px-2.5 sm:px-4 py-2 rounded-xl transition-all whitespace-nowrap shrink-0">
-                🔑<span data-i18n="navLoginLabel" class="hidden sm:inline ml-1">შესვლა</span>
+            <button onclick="navigateTo('auth')" id="navAuthBtn" class="text-sm font-bold text-slate-700 hover:text-slate-900 bg-slate-100 px-4 py-2 rounded-xl transition-all whitespace-nowrap">
+                🔑 შესვლა
             </button>
 
-            <button onclick="navigateTo('cart')" class="relative flex items-center gap-1.5 bg-slate-900 hover:bg-slate-800 text-white px-3 sm:px-5 py-2 sm:py-2.5 rounded-xl text-sm font-bold transition-all shadow-sm whitespace-nowrap shrink-0">
-                <span>🛒<span data-i18n="navCart" class="hidden sm:inline ml-1">კალათა</span></span>
+            <button onclick="navigateTo('cart')" class="relative flex items-center gap-2 bg-slate-900 hover:bg-slate-800 text-white px-5 py-2.5 rounded-xl text-sm font-bold transition-all shadow-sm whitespace-nowrap">
+                <span data-i18n="navCart">🛒 კალათა</span>
                 <span id="cartBadge" class="absolute -top-2 -right-2 bg-amber-500 text-slate-950 text-xs font-black rounded-full h-5 w-5 flex items-center justify-center border-2 border-white">0</span>
             </button>
         </div>
     </nav>
 
-    <div class="lg:hidden bg-white border-b border-slate-200 px-4 py-2 flex gap-4 text-xs font-bold text-slate-600 justify-center">
+    <div class="lg:hidden bg-white border-b border-slate-200 px-4 py-2 flex gap-4 text-xs font-bold text-slate-600 justify-center items-center relative">
         <a href="#" data-i18n="navHome" class="hover:text-slate-900">მთავარი</a>
+        <div class="relative">
+            <button type="button" onclick="window.toggleCategoriesMenu('categoriesMenuPanelMobile')" data-i18n="navCategoriesMenu" class="hover:text-slate-900">კატეგორიები ▾</button>
+            <div id="categoriesMenuPanelMobile" class="hidden absolute left-1/2 -translate-x-1/2 top-full mt-2 bg-white border border-slate-200 rounded-xl shadow-lg py-2 w-56 z-50 text-slate-600 text-left"></div>
+        </div>
         <a href="#discounts" data-i18n="navDiscounts" class="text-rose-600">% ფასდაკლებები</a>
         <a href="#about" data-i18n="navAbout" class="hover:text-slate-900">ჩვენ შესახებ</a>
     </div>
@@ -74,7 +84,7 @@
                 <div class="relative z-10 max-w-md">
                     <span data-i18n="bannerBadge" class="bg-amber-500 text-slate-950 text-[10px] font-extrabold uppercase px-2.5 py-1 rounded-md tracking-wider">სუპერ შეთავაზება</span>
                     <h1 data-i18n="bannerTitle" class="text-3xl md:text-4xl font-black text-white tracking-tight mt-4 mb-3 leading-tight">გრანდიოზული ფასდაკლება ციფრულ ტექნიკაზე!</h1>
-                    <p data-i18n="bannerText" class="text-slate-300 text-sm md:text-base font-medium mb-6">მიიღე საუკეთესო ფასები, უფასო მიწოდება მთელ საქართველოში და ონლაინ განვადება 0%-დან.</p>
+                    <p data-i18n="bannerText" class="text-slate-300 text-sm md:text-base font-medium mb-6">მიიღე საუკეთესო ფასები, სწრაფი მიწოდება მთელ საქართველოში (ღირებულება დამოკიდებულია წონაზე) და ონლაინ განვადება 0%-დან.</p>
                 </div>
                 <div class="relative z-10">
                     <a href="#discounts" data-i18n="bannerCta" class="inline-block bg-white hover:bg-amber-500 hover:text-slate-950 text-slate-900 font-bold px-6 py-3 rounded-xl text-sm transition-all shadow-sm">იხილეთ ფასდაკლებები</a>
@@ -122,12 +132,18 @@
                     <ul id="brandFilters" class="space-y-2 text-sm font-medium text-slate-600"></ul>
                 </div>
                 <div>
-                    <h4 data-i18n="filterPrice" class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3">ფასის ფილტრი ($)</h4>
+                    <h4 data-i18n="filterPrice" class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3">ფასის ფილტრი (₾)</h4>
                     <div class="flex items-center gap-2">
                         <input type="number" id="priceMin" placeholder="Min" oninput="filterProducts()" class="w-full p-2 bg-slate-50 border border-slate-200 rounded-lg text-sm outline-none">
                         <span class="text-slate-400">-</span>
                         <input type="number" id="priceMax" placeholder="Max" oninput="filterProducts()" class="w-full p-2 bg-slate-50 border border-slate-200 rounded-lg text-sm outline-none">
                     </div>
+                </div>
+                <div>
+                    <label class="flex items-center gap-2 text-sm font-medium text-slate-600 cursor-pointer select-none">
+                        <input type="checkbox" id="discountOnly" onclick="window.toggleDiscountFilter()" class="w-4 h-4 accent-rose-600 cursor-pointer">
+                        <span data-i18n="filterDiscountOnly">მხოლოდ ფასდაკლებული</span>
+                    </label>
                 </div>
             </aside>
             <main class="lg:col-span-3">
@@ -188,9 +204,9 @@
             <h2 data-i18n="aboutTitle" class="text-3xl font-black tracking-tight text-slate-900 mt-2 mb-6">ინოვაციური ონლაინ პლატფორმა</h2>
             <div class="space-y-6 text-slate-600 leading-relaxed font-medium">
                 <p data-i18n="aboutP1">**TechShop** წარმოადგენს თანამედროვე, სრულად ავტომატიზებულ ელექტრონული კომერციის პლატფორმას, რომელიც მომხმარებელს სთავაზობს პრემიუმ კლასის ციფრულ ტექნიკას, სმარტფონებსა და აქსესუარებს საუკეთესო პირობებით.</p>
-                <p data-i18n="aboutNotice" class="text-emerald-600 bg-emerald-50 border border-emerald-200 p-4 rounded-xl font-bold">🚚 მნიშვნელოვანი შეტყობინება: ჩვენთან მიწოდება არის სრულიად უფასო საქართველოს მასშტაბით (თბილისსა და ნებისმიერ რეგიონში)! შეკვეთილ ნივთს კურიერი პირდაპირ კართან მოგიტანთ ყოველგვარი დამატებითი ხარჯის გარეშე.</p>
+                <p data-i18n="aboutNotice" class="text-emerald-600 bg-emerald-50 border border-emerald-200 p-4 rounded-xl font-bold">🚚 მნიშვნელოვანი შეტყობინება: ჩვენთან მიწოდება ხდება საქართველოს მასშტაბით (თბილისსა და ნებისმიერ რეგიონში), ღირებულება გამოითვლება ნივთის წონის მიხედვით და აისახება კალათაში შეკვეთის გაფორმებისას.</p>
                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 pt-6 border-t border-slate-100">
-                    <div class="bg-slate-50 p-4 rounded-2xl"><div class="text-2xl mb-1">📦</div><h4 data-i18n="aboutFeature1Title" class="font-bold text-slate-900 text-sm">უფასო მიწოდება</h4><p data-i18n="aboutFeature1Text" class="text-xs text-slate-400 mt-1">საქართველოს ნებისმიერ წერტილში 0 ლარად.</p></div>
+                    <div class="bg-slate-50 p-4 rounded-2xl"><div class="text-2xl mb-1">📦</div><h4 data-i18n="aboutFeature1Title" class="font-bold text-slate-900 text-sm">მიწოდება წონის მიხედვით</h4><p data-i18n="aboutFeature1Text" class="text-xs text-slate-400 mt-1">ღირებულება დამოკიდებულია ნივთის წონასა და მოცულობაზე.</p></div>
                     <div class="bg-slate-50 p-4 rounded-2xl"><div class="text-2xl mb-1">🏦</div><h4 data-i18n="aboutFeature2Title" class="font-bold text-slate-900 text-sm">ონლაინ განვადება</h4><p data-i18n="aboutFeature2Text" class="text-xs text-slate-400 mt-1">BOG, TBC და Credo ბანკების მხარდაჭერა.</p></div>
                     <div class="bg-slate-50 p-4 rounded-2xl"><div class="text-2xl mb-1">🛡️</div><h4 data-i18n="aboutFeature3Title" class="font-bold text-slate-900 text-sm">ოფიციალური გარანტია</h4><p data-i18n="aboutFeature3Text" class="text-xs text-slate-400 mt-1">მინიმუმ 1 წლიანი სერვის-გარანტია.</p></div>
                 </div>
@@ -216,11 +232,12 @@
                 </div>
 
                 <div class="bg-white border border-slate-200 rounded-2xl p-6">
-                    <h3 data-i18n="checkoutStep2" class="text-lg font-bold text-slate-900 mb-4 border-b border-slate-100 pb-3">2. მიწოდების ინფორმაცია (მიწოდება უფასოა)</h3>
+                    <h3 data-i18n="checkoutStep2" class="text-lg font-bold text-slate-900 mb-4 border-b border-slate-100 pb-3">2. მიწოდების ინფორმაცია</h3>
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <input type="text" data-i18n-placeholder="formFirstName" placeholder="სახელი" class="p-3 border border-slate-200 rounded-xl text-sm outline-none">
-                        <input type="text" data-i18n-placeholder="formLastName" placeholder="გვარი" class="p-3 border border-slate-200 rounded-xl text-sm outline-none">
-                        <input type="text" data-i18n-placeholder="formAddress" placeholder="სრული მისამართი (მაგ: ბათუმი, რუსთაველის 5)" class="p-3 border border-slate-200 rounded-xl text-sm outline-none sm:col-span-2">
+                        <input type="text" id="checkoutFirstName" data-i18n-placeholder="formFirstName" placeholder="სახელი" class="p-3 border border-slate-200 rounded-xl text-sm outline-none">
+                        <input type="text" id="checkoutLastName" data-i18n-placeholder="formLastName" placeholder="გვარი" class="p-3 border border-slate-200 rounded-xl text-sm outline-none">
+                        <input type="tel" id="checkoutPhone" data-i18n-placeholder="formPhone" placeholder="ტელეფონის ნომერი" class="p-3 border border-slate-200 rounded-xl text-sm outline-none">
+                        <input type="text" id="checkoutAddress" data-i18n-placeholder="formAddress" placeholder="სრული მისამართი (მაგ: ბათუმი, რუსთაველის 5)" class="p-3 border border-slate-200 rounded-xl text-sm outline-none">
                     </div>
                 </div>
 
@@ -271,7 +288,7 @@
                     <h3 data-i18n="orderSummary" class="text-lg font-bold text-slate-900 mb-4">შეკვეთის რეზიუმე</h3>
                     <div class="space-y-3 text-sm font-medium border-b border-slate-100 pb-4">
                         <div class="flex justify-between text-slate-500"><span data-i18n="summaryProducts">პროდუქტები:</span><span id="summarySubtotal" class="text-slate-900">$0</span></div>
-                        <div class="flex justify-between text-slate-500"><span data-i18n="summaryDelivery">მიწოდება:</span><span data-i18n="summaryDeliveryFree" class="text-emerald-600 font-bold">უფასო (საქართველო)</span></div>
+                        <div class="flex justify-between text-slate-500"><span data-i18n="summaryDelivery">მიწოდება:</span><span id="summaryDeliveryCost" class="text-slate-900 font-bold">₾0</span></div>
                     </div>
                     <div class="flex justify-between items-center my-4">
                         <span data-i18n="summaryTotalLabel" class="text-base font-bold text-slate-900">სულ:</span>
@@ -313,7 +330,7 @@
             </div>
             <div>
                 <h4 data-i18n="footerServicesTitle" class="text-sm font-black uppercase text-slate-900 mb-3 tracking-wider">სერვისები</h4>
-                <p class="text-xs text-slate-500 font-medium leading-relaxed"><span data-i18n="footerDeliveryLabel">🚚 მიწოდება:</span> <span data-i18n="summaryDeliveryFree" class="text-emerald-600 font-bold">უფასო (საქართველოს მასშტაბით)</span></p>
+                <p class="text-xs text-slate-500 font-medium leading-relaxed"><span data-i18n="footerDeliveryLabel">🚚 მიწოდება:</span> <span data-i18n="footerDeliveryText" class="text-slate-700 font-bold">ღირებულება წონის მიხედვით (საქართველოს მასშტაბით)</span></p>
                 <p class="text-xs text-slate-500 font-medium leading-relaxed mt-1" data-i18n="footerInstallmentLabel">🏦 განვადება: საქართველოს ბანკი, თიბისი, კრედო</p>
             </div>
         </div>
